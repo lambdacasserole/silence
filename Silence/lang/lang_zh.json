@@ -1,0 +1,18 @@
+﻿{
+  "Code": "zh",
+  "Name": "Chinese",
+  "LocalizedStrings": {
+    "confirm_append_message": "您想要追加到您的现有宏或重新开始？",
+    "confirm_append_title": "继续或重新开始？",
+    "confirm_clear_message": "您真的想要删除您的现有宏？",
+    "confirm_clear_title":  "删除现有宏？",
+    "confirm_open_message": "您真的想要打开这个宏文件和删除您的现有宏？",
+    "confirm_open_title": "删除现有宏？",
+    "error_save_nomacro_message": "不可能保存文件因为没有现有宏。",
+    "error_save_nomacro_title": "不可能保存宏",
+    "dialog_save_macro_title": "保存宏文件",
+    "dialog_save_macro_filter":  "Silence的宏文件 (*.hush)|*.hush|所有文件 (*.*)|*.*",
+    "dialog_open_macro_title": "打开宏文件",
+    "dialog_open_macro_filter":  "Silence的宏文件 (*.hush)|*.hush|所有文件 (*.*)|*.*"
+  }
+}

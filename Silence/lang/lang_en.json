@@ -1,0 +1,18 @@
+﻿{
+  "Code": "en",
+  "Name": "English",
+  "LocalizedStrings": {
+    "confirm_append_message": "This will continue appending to your current macro, would you like to start over and clear the current macro?",
+    "confirm_append_title": "Clear Macro?",
+    "confirm_clear_message": "Are you sure you want to clear the current macro?",
+    "confirm_clear_title":  "Clear Macro?",
+    "confirm_open_message": "Are you sure you want to load this file and overwrite the currently recorded macro?",
+    "confirm_open_title": "Clear Macro?",
+    "error_save_nomacro_message": "There is no macro currently recorded.",
+    "error_save_nomacro_title": "Cannot Save Macro",
+    "dialog_save_macro_title": "Save Macro",
+    "dialog_save_macro_filter":  "Silence Macro Files (*.hush)|*.hush|All Files (*.*)|*.*",
+    "dialog_open_macro_title": "Open Macro",
+    "dialog_open_macro_filter":  "Silence Macro Files (*.hush)|*.hush|All Files (*.*)|*.*"
+  }
+}
