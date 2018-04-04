@@ -103,13 +103,13 @@ namespace Silence.Hooking.Windows
 
         /// <summary>
         /// Posted to the window with the keyboard focus when the user presses the F10 key (which activates the menu 
-		/// bar) or holds down the ALT key and then presses another key.
+        /// bar) or holds down the ALT key and then presses another key.
         /// </summary>
         private const int WM_SYSKEYDOWN = 0x104;
 
         /// <summary>
         /// Posted to the window with the keyboard focus when the user releases a key that was pressed while the ALT key
-		/// was held down. 
+        /// was held down. 
         /// </summary>
         private const int WM_SYSKEYUP = 0x105;
 
