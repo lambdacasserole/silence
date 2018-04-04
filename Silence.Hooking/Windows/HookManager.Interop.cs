@@ -6,15 +6,15 @@ namespace Silence.Hooking.Windows
     public partial class HookManager
     {
         /* This file contains documentation from MSDN governed according to the license agreement:
-		 * https://msdn.microsoft.com/en-us/cc300389.aspx
-		 * 
-		 * Such documentation is reproduced here as a reasonable measure taken to document the API that this software uses
-		 * in order to faciliate development, as permitted under the license agreement (Section 3). The full version of 
-		 * such documentation is linked to in the remarks section of each relevant method's documentation block.
-		 * 
-		 * Such documentation falls under the copyright notice:
-		 * © 2013 Microsoft Corporation. All rights reserved.
-		 */
+         * https://msdn.microsoft.com/en-us/cc300389.aspx
+         * 
+         * Such documentation is reproduced here as a reasonable measure taken to document the API that this software uses
+         * in order to faciliate development, as permitted under the license agreement (Section 3). The full version of 
+         * such documentation is linked to in the remarks section of each relevant method's documentation block.
+         * 
+         * Such documentation falls under the copyright notice:
+         * © 2013 Microsoft Corporation. All rights reserved.
+         */
 
         /// <summary>
         /// Installs a hook procedure that monitors low-level mouse input events.

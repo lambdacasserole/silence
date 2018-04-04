@@ -9,7 +9,7 @@ namespace Silence.Hooking.Windows.Native
      * https://msdn.microsoft.com/en-us/cc300389.aspx
      * 
      * Such documentation is reproduced here as a reasonable measure taken to document the API that this software uses
-	 * in order to faciliate development, as permitted under the license agreement (Section 3). The full version of 
+     * in order to faciliate development, as permitted under the license agreement (Section 3). The full version of 
      * such documentation is linked to in the remarks section of each relevant method's documentation block.
      * 
      * Such documentation falls under the copyright notice:
