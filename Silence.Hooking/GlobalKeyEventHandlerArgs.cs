@@ -2,7 +2,6 @@ using System;
 
 namespace Silence.Hooking
 {
-
     /// <summary>
     /// Represents a set of event arguments passed into the handler for a global key event.
     /// </summary>

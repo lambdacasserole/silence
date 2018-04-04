@@ -1,16 +1,13 @@
-using System;
 using System.Windows;
 using System.Windows.Input;
 
 namespace Silence.Hooking
 {
-
     /// <summary>
     /// Represents a set of event arguments passed into the handler for a global mouse event.
     /// </summary>
     public class GlobalMouseEventHandlerArgs : HandleableEventArgs
     {
-
         /// <summary>
         /// The x- and y-coordinates of the cursor, in screen coordinates.
         /// </summary>
@@ -58,7 +55,6 @@ namespace Silence.Hooking
         /// <param name="delta">The mouse scroll wheel delta value if relevant.</param>
         public GlobalMouseEventHandlerArgs(Point point, MouseButton button, int mouseData, int flags, int time, int extraInfo, int delta)
         {
-
             Point = point;
             Button = button;
             MouseData = mouseData;
@@ -66,9 +62,6 @@ namespace Silence.Hooking
             Time = time;
             ExtraInfo = extraInfo;
             Delta = delta;
-
         }
-
     }
-
 }

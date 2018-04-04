@@ -1,12 +1,9 @@
 ﻿using System.Runtime.InteropServices;
-using System;
 
 namespace Silence.Hooking.Windows
 {
-
     public partial class HookManager
     {
-
         /// <summary>
         /// The POINT structure defines the x- and y- coordinates of a point.
         /// </summary>
@@ -16,7 +13,6 @@ namespace Silence.Hooking.Windows
         [StructLayout(LayoutKind.Sequential)]
         private struct Point
         {
-
             /// <summary>
             /// The x-coordinate of the point.
             /// </summary>
@@ -26,7 +22,6 @@ namespace Silence.Hooking.Windows
             /// The y-coordinate of the point.
             /// </summary>
             public int y;
-
         }
 
         /// <summary>
@@ -38,7 +33,6 @@ namespace Silence.Hooking.Windows
         [StructLayout(LayoutKind.Sequential)]
         private struct MSLLHOOKSTRUCT
         {
-            
             /// <summary>
             /// The x- and y-coordinates of the cursor, in screen coordinates.
             /// </summary>
@@ -63,7 +57,6 @@ namespace Silence.Hooking.Windows
             /// Additional information associated with the message.
             /// </summary>
             public int dwExtraInfo;
-
         }
 
         /// <summary>
@@ -75,7 +68,6 @@ namespace Silence.Hooking.Windows
         [StructLayout(LayoutKind.Sequential)]
         private struct KBDLLHOOKSTRUCT
         {
-
             /// <summary>
             /// A virtual-key code. The code must be a value in the range 1 to 254.
             /// </summary>
@@ -100,9 +92,6 @@ namespace Silence.Hooking.Windows
             /// Additional information associated with the message. 
             /// </summary>
             public int dwExtraInfo;
-
         }
-
     }
-
 }
