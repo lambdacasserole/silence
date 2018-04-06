@@ -1,39 +1,30 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Text;
 using System.Xml;
 
 namespace Silence.Macro
 {
-
     /// <summary>
     /// Represents a recorded sequence of mouse and keyboard events.
     /// </summary>
     public class Macro
     {
-
         /// <summary>
         /// Holds the list of events that comprise this macro.
         /// </summary>
-        private List<MacroEvent> events;
+        private readonly List<MacroEvent> _events;
 
         /// <summary>
         /// Gets the list of events that comprise this macro as an array.
         /// </summary>
-        public MacroEvent[] Events {
-            get
-            {
-                return (events == null ? null : events.ToArray());
-            }
-        }
+        public MacroEvent[] Events => _events.ToArray();
 
         /// <summary>
         /// Initialises a new instance of a macro.
         /// </summary>
         public Macro()
         {
-            events = new List<MacroEvent>();
+            _events = new List<MacroEvent>();
         }
 
         /// <summary>
@@ -42,7 +33,7 @@ namespace Silence.Macro
         /// <param name="newEvent">The event to append.</param>
         public void AddEvent(MacroEvent newEvent)
         {
-            events.Add(newEvent);
+            _events.Add(newEvent);
         }
 
         /// <summary>
@@ -50,7 +41,7 @@ namespace Silence.Macro
         /// </summary>
         public void ClearEvents()
         {
-            events.Clear();
+            _events.Clear();
         }
 
         /// <summary>
@@ -59,9 +50,9 @@ namespace Silence.Macro
         /// <returns></returns>
         public string ToXml()
         {
-            StringBuilder str = new StringBuilder();
+            var str = new StringBuilder();
             str.AppendLine("<SilenceMacro>");
-            foreach (MacroEvent current in events)
+            foreach (var current in _events)
             {
                 str.AppendLine(current.ToXml());
             }
@@ -76,7 +67,7 @@ namespace Silence.Macro
         /// <param name="path">The path to save to.</param>
         public void Save(string path)
         {
-            XmlDocument xmlDoc = new XmlDocument();
+            var xmlDoc = new XmlDocument();
             xmlDoc.LoadXml(ToXml());
 
             xmlDoc.Save(path);
@@ -88,11 +79,20 @@ namespace Silence.Macro
         /// <param name="path">The path to load the macro from.</param>
         public void Load(string path)
         {
+            // Clear existing events.
             ClearEvents();
 
-            XmlDocument xmlDoc = new XmlDocument();
+            // Load XML document from path.
+            var xmlDoc = new XmlDocument();
             xmlDoc.Load(path);
 
+            // XML document might have a null docment element (i.e. be empty).
+            if (xmlDoc.DocumentElement == null)
+            {
+                return;
+            }
+
+            // Load events into macro from document.
             foreach (XmlElement current in xmlDoc.DocumentElement)
             {
                 switch (current.Name)
@@ -121,7 +121,5 @@ namespace Silence.Macro
                 }
             }
         }
-
     }
-
 }

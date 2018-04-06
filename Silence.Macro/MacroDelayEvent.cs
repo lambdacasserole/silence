@@ -1,18 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Text;
 using System.Xml;
 
 namespace Silence.Macro
 {
-
     /// <summary>
     /// Represents a delay that occurs between user actions during recording of a macro.
     /// </summary>
-    class MacroDelayEvent : MacroEvent
+    public class MacroDelayEvent : MacroEvent
     {
-
         /// <summary>
         /// Gets or sets the delay in ticks.
         /// </summary>
@@ -48,14 +43,12 @@ namespace Silence.Macro
         /// <returns></returns>
         public override string ToXml() 
         {
-            StringBuilder str = new StringBuilder();
+            var str = new StringBuilder();
             str.AppendLine("<MacroDelayEvent>");
-            str.AppendLine("<Delay>" + Delay.ToString() + "</Delay>");
+            str.AppendLine($"<Delay>{Delay}</Delay>");
             str.AppendLine("</MacroDelayEvent>");
 
             return str.ToString();
         }
-
     }
-
 }
