@@ -6,16 +6,27 @@ namespace Silence.Hooking.Windows
 {
     public partial class HookManager
     {
+        /* This file contains documentation from MSDN governed according to the license agreement:
+         * https://msdn.microsoft.com/en-us/cc300389.aspx
+         * 
+         * Such documentation is reproduced here as a reasonable measure taken to document the API that this software uses
+         * in order to faciliate development, as permitted under the license agreement (Section 3). The full version of 
+         * such documentation is linked to in the remarks section of each relevant method's documentation block.
+         * 
+         * Such documentation falls under the copyright notice:
+         * © 2013 Microsoft Corporation. All rights reserved.
+         */
+
         /// <summary>
         /// This field is not objectively needed but we need to keep a reference to a delegate which will be 
         /// passed to unmanaged code to prevent the GC from cleaning it up.
         /// </summary>
-        private HookProc windowsKeyboardDelegate;
+        private HookProc _windowsKeyboardDelegate;
 
         /// <summary>
         /// Stores the handle to the keyboard hook procedure.
         /// </summary>
-        private int windowsKeyboardHookHandle;
+        private int _windowsKeyboardHookHandle;
 
         /// <summary>
         /// A callback function which will be called every time a keyboard activity is detected.
@@ -23,26 +34,22 @@ namespace Silence.Hooking.Windows
         /// <param name="nCode">Specifies whether the hook procedure must process the message.</param>
         /// <param name="wParam">Specifies whether the message was sent by the current thread.</param>
         /// <param name="lParam">A pointer to a CWPSTRUCT structure that contains details about the message.</param>
-        /// <returns></returns>
-        private int KeyboardHookProc(int nCode, Int32 wParam, IntPtr lParam)
+        /// <returns>If code is less than zero, the hook procedure must return the value returned by CallNextHookEx.</returns>
+        private int KeyboardHookProc(int nCode, int wParam, IntPtr lParam)
         {
-            // Indicates if any  underlying events handled the action.
-            bool handled = false;
+            // Indicates if any underlying events handled the action.
+            var handled = false;
 
             if (nCode >= 0)
             {
                 // Marshal the data from callback.
-                KBDLLHOOKSTRUCT keyStruct = (KBDLLHOOKSTRUCT)Marshal.PtrToStructure(lParam, typeof(KBDLLHOOKSTRUCT));
+                var keyStruct = (KBDLLHOOKSTRUCT) Marshal.PtrToStructure(lParam, typeof(KBDLLHOOKSTRUCT));
 
                 // Key was pressed down.
                 if (GlobalKeyDown != null && (wParam == WM_KEYDOWN || wParam == WM_SYSKEYDOWN))
                 {
-                    GlobalKeyEventHandlerArgs keyEventArgs = new GlobalKeyEventHandlerArgs(
-                        keyStruct.vkCode, 
-                        keyStruct.scanCode,
-                        keyStruct.flags, 
-                        keyStruct.time, 
-                        keyStruct.dwExtraInfo);
+                    var keyEventArgs = new GlobalKeyEventHandlerArgs(keyStruct.vkCode, keyStruct.scanCode,
+                        keyStruct.flags, keyStruct.time, keyStruct.dwExtraInfo);
 
                     GlobalKeyDown.Invoke(null, keyEventArgs);
                     handled = keyEventArgs.Handled;
@@ -51,12 +58,8 @@ namespace Silence.Hooking.Windows
                 // Key was released.
                 if (GlobalKeyUp != null && (wParam == WM_KEYUP || wParam == WM_SYSKEYUP))
                 {
-                    GlobalKeyEventHandlerArgs keyEventArgs = new GlobalKeyEventHandlerArgs(
-                            keyStruct.vkCode,
-                            keyStruct.scanCode,
-                            keyStruct.flags,
-                            keyStruct.time,
-                            keyStruct.dwExtraInfo);
+                    var keyEventArgs = new GlobalKeyEventHandlerArgs(keyStruct.vkCode, keyStruct.scanCode,
+                        keyStruct.flags, keyStruct.time, keyStruct.dwExtraInfo);
 
                     GlobalKeyUp.Invoke(null, keyEventArgs);
                     handled = handled || keyEventArgs.Handled;
@@ -70,7 +73,7 @@ namespace Silence.Hooking.Windows
             }
 
             // Call next hook.
-            return CallNextHookEx(windowsKeyboardHookHandle, nCode, wParam, lParam);
+            return CallNextHookEx(_windowsKeyboardHookHandle, nCode, wParam, lParam);
         }
 
         /// <summary>
@@ -79,16 +82,16 @@ namespace Silence.Hooking.Windows
         private void EnsureSubscribedToGlobalKeyboardEvents()
         {
             // Install keyboard hook only if it is not installed and must be installed.
-            if (windowsKeyboardHookHandle == 0)
+            if (_windowsKeyboardHookHandle == 0)
             {
                 // Keep a reference to avoid collection by the GC.
-                windowsKeyboardDelegate = KeyboardHookProc;
+                _windowsKeyboardDelegate = KeyboardHookProc;
 
                 // Install hook.
-                windowsKeyboardHookHandle = SetWindowsHookEx(WH_KEYBOARD_LL, windowsKeyboardDelegate, IntPtr.Zero, 0);
+                _windowsKeyboardHookHandle = SetWindowsHookEx(WH_KEYBOARD_LL, _windowsKeyboardDelegate, IntPtr.Zero, 0);
 
                 // If failed.
-                if (windowsKeyboardHookHandle == 0)
+                if (_windowsKeyboardHookHandle == 0)
                 {
                     // Do cleanup.
                     ForceUnsunscribeFromGlobalKeyboardEvents();
@@ -105,8 +108,7 @@ namespace Silence.Hooking.Windows
         private void TryUnsubscribeFromGlobalKeyboardEvents()
         {
             // If no subsribers are registered unsubscribe from hook.
-            if (GlobalKeyDown == null &&
-                GlobalKeyUp == null)
+            if (GlobalKeyDown == null && GlobalKeyUp == null)
             {
                 ForceUnsunscribeFromGlobalKeyboardEvents();
             }
@@ -118,16 +120,16 @@ namespace Silence.Hooking.Windows
         private void ForceUnsunscribeFromGlobalKeyboardEvents()
         {
             // Don't try to uninstall a null hook.
-            if (windowsKeyboardHookHandle != 0)
+            if (_windowsKeyboardHookHandle != 0)
             {
                 // Uninstall hook.
-                var result = UnhookWindowsHookEx(windowsKeyboardHookHandle);
+                var result = UnhookWindowsHookEx(_windowsKeyboardHookHandle);
                 
                 // Reset invalid handle.
-                windowsKeyboardHookHandle = 0;
+                _windowsKeyboardHookHandle = 0;
                 
                 // Free up for GC.
-                windowsKeyboardDelegate = null;
+                _windowsKeyboardDelegate = null;
 
                 // If failed, an exception must be thrown.
                 if (result == 0)

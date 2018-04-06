@@ -138,7 +138,7 @@ namespace Silence.Hooking.Windows
                 TryUnsubscribeFromGlobalKeyboardEvents();
             }
         }
-    
+        
         /// <summary>
         /// Unsubscribes from all hooks and releases all resources associated with this object.
         /// </summary>

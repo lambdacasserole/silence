@@ -1,17 +1,29 @@
 ﻿using System.Runtime.InteropServices;
 
+// ReSharper disable InconsistentNaming
+// ReSharper disable FieldCanBeMadeReadOnly.Local
+
 namespace Silence.Hooking.Windows
 {
     public partial class HookManager
     {
+        /* This file contains documentation from MSDN governed according to the license agreement:
+         * https://msdn.microsoft.com/en-us/cc300389.aspx
+         * 
+         * Such documentation is reproduced here as a reasonable measure taken to document the API that this software uses
+         * in order to faciliate development, as permitted under the license agreement (Section 3). The full version of 
+         * such documentation is linked to in the remarks section of each relevant method's documentation block.
+         * 
+         * Such documentation falls under the copyright notice:
+         * © 2013 Microsoft Corporation. All rights reserved.
+         */
+
         /// <summary>
         /// The POINT structure defines the x- and y- coordinates of a point.
         /// </summary>
-        /// <remarks>
-        /// http://msdn.microsoft.com/en-us/library/windows/desktop/dd162805(v=vs.85).aspx
-        /// </remarks>
+        /// <remarks>https://msdn.microsoft.com/en-us/library/windows/desktop/dd162805(v=vs.85).aspx</remarks>
         [StructLayout(LayoutKind.Sequential)]
-        private struct Point
+        private struct POINT
         {
             /// <summary>
             /// The x-coordinate of the point.
@@ -26,9 +38,7 @@ namespace Silence.Hooking.Windows
 
         /// <summary>
         /// Contains information about a low-level mouse input event. 
-        /// <remarks>
-        /// http://msdn.microsoft.com/en-us/library/windows/desktop/ms644970(v=vs.85).aspx
-        /// </remarks>
+        /// <remarks>https://msdn.microsoft.com/en-us/library/windows/desktop/ms644970(v=vs.85).aspx</remarks>
         /// </summary>
         [StructLayout(LayoutKind.Sequential)]
         private struct MSLLHOOKSTRUCT
@@ -36,7 +46,7 @@ namespace Silence.Hooking.Windows
             /// <summary>
             /// The x- and y-coordinates of the cursor, in screen coordinates.
             /// </summary>
-            public Point pt;
+            public POINT pt;
 
             /// <summary>
             /// Contains information about mouse X buttons or the mouse wheel if relevant.
@@ -62,9 +72,7 @@ namespace Silence.Hooking.Windows
         /// <summary>
         /// Contains information about a low-level keyboard input event.
         /// </summary>
-        /// <remarks>
-        /// http://msdn.microsoft.com/en-us/library/windows/desktop/ms644967(v=vs.85).aspx
-        /// </remarks>
+        /// <remarks>https://msdn.microsoft.com/en-us/library/windows/desktop/ms644967(v=vs.85).aspx</remarks>
         [StructLayout(LayoutKind.Sequential)]
         private struct KBDLLHOOKSTRUCT
         {

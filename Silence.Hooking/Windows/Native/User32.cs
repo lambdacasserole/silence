@@ -25,7 +25,7 @@ namespace Silence.Hooking.Windows.Native
         /// Translates virtual-key messages into character messages. 
         /// </summary>
         /// <param name="msg">A pointer to an MSG structure that contains message information retrieved from the calling thread's message queue by using the GetMessage or PeekMessage function.</param>
-        /// <returns></returns>
+        /// <returns>If the message is translated (that is, a character message is posted to the thread's message queue), the return value is nonzero.</returns>
         /// <remarks>http://msdn.microsoft.com/en-us/library/windows/desktop/ms644955(v=vs.85).aspx</remarks>
         [SecurityCritical, SuppressUnmanagedCodeSecurity, DllImport("user32.dll", CharSet = CharSet.Auto, ExactSpelling = true)]
         public static extern bool TranslateMessage([In, Out] ref MSG msg);
@@ -34,7 +34,7 @@ namespace Silence.Hooking.Windows.Native
         /// Dispatches a message to a window procedure.
         /// </summary>
         /// <param name="msg">A pointer to a structure that contains the message.</param>
-        /// <returns></returns>
+        /// <returns>The return value specifies the value returned by the window procedure.</returns>
         /// <remarks>http://msdn.microsoft.com/en-us/library/windows/desktop/ms644934(v=vs.85).aspx</remarks>
         [SecurityCritical, SuppressUnmanagedCodeSecurity, DllImport("user32.dll", CharSet = CharSet.Auto)]
         public static extern IntPtr DispatchMessage([In] ref MSG msg);
@@ -46,7 +46,7 @@ namespace Silence.Hooking.Windows.Native
         /// <param name="hwnd">A handle to the window whose messages are to be retrieved. The window must belong to the current thread.</param>
         /// <param name="wMsgFilterMin">The integer value of the lowest message value to be retrieved.</param>
         /// <param name="wMsgFilterMax">The integer value of the highest message value to be retrieved.</param>
-        /// <returns></returns>
+        /// <returns>If the function retrieves a message other than WM_QUIT, the return value is nonzero.</returns>
         /// <remarks>http://msdn.microsoft.com/en-us/library/windows/desktop/ms644936(v=vs.85).aspx</remarks>
         [SecurityCritical, SuppressUnmanagedCodeSecurity, DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
         public static extern bool GetMessage(ref MSG lpMsg, Int32 hwnd, Int32 wMsgFilterMin, Int32 wMsgFilterMax);

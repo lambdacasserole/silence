@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Runtime.InteropServices;
 
+// ReSharper disable InconsistentNaming
+// ReSharper disable UnusedMember.Local
+
 namespace Silence.Hooking.Windows
 {
     public partial class HookManager
