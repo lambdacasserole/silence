@@ -11,37 +11,37 @@ namespace Silence.Hooking
         /// <summary>
         /// The x- and y-coordinates of the cursor, in screen coordinates.
         /// </summary>
-        public Point Point { get; private set; }
+        public Point Point { get; }
 
         /// <summary>
         /// The mouse button associated with the message.
         /// </summary>
-        public MouseButton Button { get; private set; }
+        public MouseButton Button { get; }
 
         /// <summary>
         /// Contains information about mouse X buttons or the mouse wheel if relevant.
         /// </summary>
-        public int MouseData { get; private set; }
+        public int MouseData { get; }
 
         /// <summary>
         /// The event-injected flag. 
         /// </summary>
-        public int Flags { get; private set; }
+        public int Flags { get; }
 
         /// <summary>
         /// The time stamp for this message.
         /// </summary>
-        public int Time { get; private set; }
+        public int Time { get; }
 
         /// <summary>
         /// Additional information associated with the message.
         /// </summary>
-        public int ExtraInfo { get; private set; }
+        public int ExtraInfo { get; }
 
         /// <summary>
         /// The mouse scroll wheel delta value if relevant.
         /// </summary>
-        public int Delta { get; private set; }
+        public int Delta { get; }
         
         /// <summary>
         /// Initialises a new instance of a set of global mouse event handler arguments.

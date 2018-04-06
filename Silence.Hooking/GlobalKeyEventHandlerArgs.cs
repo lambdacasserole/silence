@@ -1,5 +1,3 @@
-using System;
-
 namespace Silence.Hooking
 {
     /// <summary>
@@ -7,31 +5,30 @@ namespace Silence.Hooking
     /// </summary>
     public class GlobalKeyEventHandlerArgs : HandleableEventArgs
     {
-
         /// <summary>
         /// A virtual-key code. The code must be a value in the range 1 to 254.
         /// </summary>
-        public int VirtualKeyCode { get; private set; }
+        public int VirtualKeyCode { get; }
 
         /// <summary>
         /// A hardware scan code for the key.
         /// </summary>
-        public int ScanCode { get; private set; }
+        public int ScanCode { get; }
 
         /// <summary>
         /// The extended-key flag, event-injected flag, context code, and transition-state flag.
         /// </summary>
-        public int Flags { get; private set; }
+        public int Flags { get; }
 
         /// <summary>
         /// The time stamp for this message.
         /// </summary>
-        public int Time { get; private set; }
+        public int Time { get; }
 
         /// <summary>
         /// Additional information associated with the message. 
         /// </summary>
-        public int ExtraInfo { get; private set; }
+        public int ExtraInfo { get; }
 
         /// <summary>
         /// Initialises a new instance of a set of global key event handler arguments.
@@ -43,15 +40,11 @@ namespace Silence.Hooking
         /// <param name="extraInfo">Additional information associated with the message.</param>
         public GlobalKeyEventHandlerArgs(int virtualKeyCode, int scanCode, int flags, int time, int extraInfo)
         {
-            
             VirtualKeyCode = virtualKeyCode;
             ScanCode = scanCode;
             Flags = flags;
             Time = time;
             ExtraInfo = extraInfo;
-
         }
-
     }
-
 }
