@@ -1,45 +1,40 @@
 ﻿using Silence.Simulation;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Windows;
 using System.Windows.Forms;
 
 namespace Silence.Macro
 {
-
     /// <summary>
     /// Provides support for playback of recorded macros.
     /// </summary>
     public class MacroPlayer
     {
-
         /// <summary>
         /// Holds the mouse simulator that underlies this object.
         /// </summary>
-        private MouseSimulator underlyingMouseSimulator;
+        private readonly MouseSimulator _mouseSimulator;
 
         /// <summary>
         /// Holds the keyboard simulator that underlies this object.
         /// </summary>
-        private KeyboardSimulator underlyingKeyboardSimulator;
+        private readonly KeyboardSimulator _keyboardSimulator;
 
         /// <summary>
         /// Holds the thread that the macro is currently executing on.
         /// </summary>
-        private Thread macroThread;
+        private Thread _macroThread;
 
         /// <summary>
         /// Holds whether or not the macro has been cancelled.
         /// </summary>
-        private bool cancelled;
+        private bool _cancelled;
 
         /// <summary>
         /// Holds the number of times the macro should repeat before ending.
         /// </summary>
-        private int repetitions;
+        private int _repetitions;
 
         /// <summary>
         /// Gets the macro currently loaded into the player.
@@ -49,15 +44,10 @@ namespace Silence.Macro
         /// <summary>
         /// Gets or sets the number of times the macro should repeat before ending.
         /// </summary>
-        public int Repetitions { 
-            get 
-            {
-                return repetitions;
-            }
-            set
-            {
-                repetitions = (value == 0 ? 1 : value);
-            }
+        public int Repetitions
+        {
+            get => _repetitions;
+            set => _repetitions = (value == 0 ? 1 : value);
         }
 
         /// <summary>
@@ -70,10 +60,10 @@ namespace Silence.Macro
         /// </summary>
         public MacroPlayer()
         {
-            underlyingMouseSimulator = new MouseSimulator(new InputSimulator());
-            underlyingKeyboardSimulator = new KeyboardSimulator(new InputSimulator());
-            repetitions = 1;
-            cancelled = false;
+            _mouseSimulator = new MouseSimulator(new InputSimulator());
+            _keyboardSimulator = new KeyboardSimulator(new InputSimulator());
+            _repetitions = 1;
+            _cancelled = false;
         }
 
         /// <summary>
@@ -81,7 +71,7 @@ namespace Silence.Macro
         /// </summary>
         public void CancelPlayback()
         {
-            cancelled = IsPlaying;
+            _cancelled = IsPlaying;
         }
 
         /// <summary>
@@ -98,10 +88,10 @@ namespace Silence.Macro
         /// </summary>
         /// <param name="point">The point to convert.</param>
         /// <returns></returns>
-        private Point ConvertPointToAbsolute(Point point)
+        private static Point ConvertPointToAbsolute(Point point)
         {
-            return new Point((Convert.ToDouble(65535) * point.X) / Convert.ToDouble(Screen.PrimaryScreen.Bounds.Width),
-                (Convert.ToDouble(65535) * point.Y) / Convert.ToDouble(Screen.PrimaryScreen.Bounds.Height));
+            return new Point(Convert.ToDouble(65535) * point.X / Convert.ToDouble(Screen.PrimaryScreen.Bounds.Width),
+                Convert.ToDouble(65535) * point.Y / Convert.ToDouble(Screen.PrimaryScreen.Bounds.Height));
         }
 
         /// <summary>
@@ -112,84 +102,81 @@ namespace Silence.Macro
             IsPlaying = true;
 
             // Repeat macro as required.
-            for (int i = 0; i < Repetitions; i++)
+            for (var i = 0; i < Repetitions; i++)
             {
                 // Loop through each macro event.
-                foreach (MacroEvent current in CurrentMacro.Events)
+                foreach (var current in CurrentMacro.Events)
                 {
                     // Cancel playback.
-                    if (cancelled)
+                    if (_cancelled)
                     {
-                        cancelled = false;
+                        _cancelled = false;
                         i = Repetitions;
                         break;
                     }
 
                     // Cast event to appropriate type.
-                    if(current is MacroDelayEvent) 
+                    switch (current)
                     {
-                        // Delay event.
-                        MacroDelayEvent castEvent = (MacroDelayEvent)current;
-                        Thread.Sleep(new TimeSpan(castEvent.Delay));
-                    }
-                    else if (current is MacroMouseMoveEvent)
-                    {
-                        // Mouse move event.
-                        MacroMouseMoveEvent castEvent = (MacroMouseMoveEvent)current;
-                        Point absolutePoint = ConvertPointToAbsolute(castEvent.Location);
-                        underlyingMouseSimulator.MoveMouseTo(absolutePoint.X, absolutePoint.Y);
-                    }
-                    else if (current is MacroMouseDownEvent)
-                    {
-                        // Mouse down event.
-                        MacroMouseDownEvent castEvent = (MacroMouseDownEvent)current;
-                        Point absolutePoint = ConvertPointToAbsolute(castEvent.Location);
-                        underlyingMouseSimulator.MoveMouseTo(absolutePoint.X, absolutePoint.Y);
-                        if (castEvent.Button == System.Windows.Input.MouseButton.Left)
-                        {
-                            underlyingMouseSimulator.LeftButtonDown();
-                        }
-                        else if (castEvent.Button == System.Windows.Input.MouseButton.Right)
-                        {
-                            underlyingMouseSimulator.RightButtonDown();
-                        }
-                    }
-                    else if (current is MacroMouseUpEvent)
-                    {
-                        // Mouse up event.
-                        MacroMouseUpEvent castEvent = (MacroMouseUpEvent)current;
-                        Point absolutePoint = ConvertPointToAbsolute(castEvent.Location);
-                        underlyingMouseSimulator.MoveMouseTo(absolutePoint.X, absolutePoint.Y);
-                        if (castEvent.Button == System.Windows.Input.MouseButton.Left)
-                        {
-                            underlyingMouseSimulator.LeftButtonUp();
-                        }
-                        else if (castEvent.Button == System.Windows.Input.MouseButton.Right)
-                        {
-                            underlyingMouseSimulator.RightButtonUp();
-                        }
-                    }
-                    else if (current is MacroKeyDownEvent)
-                    {
-                        // Key down event.
-                        MacroKeyDownEvent castEvent = (MacroKeyDownEvent)current;
-                        underlyingKeyboardSimulator.KeyDown((Simulation.Native.VirtualKeyCode)castEvent.VirtualKeyCode);
-                    }
-                    else if (current is MacroKeyUpEvent)
-                    {
-                        // Key up event.
-                        MacroKeyUpEvent castEvent = (MacroKeyUpEvent)current;
-                        underlyingKeyboardSimulator.KeyUp((Simulation.Native.VirtualKeyCode)castEvent.VirtualKeyCode);
-                    }
-                    else if (current is MacroMouseWheelEvent)
-                    {
-                        // Mouse wheel event.
-                        MacroMouseWheelEvent castEvent = (MacroMouseWheelEvent)current;
-                        Point absolutePoint = ConvertPointToAbsolute(castEvent.Location);
-                        underlyingMouseSimulator.MoveMouseTo(absolutePoint.X, absolutePoint.Y);
-                        underlyingMouseSimulator.VerticalScroll(castEvent.Delta / 120);
-                    }
+                        case MacroDelayEvent delay:
 
+                            // Delay event.
+                            Thread.Sleep(new TimeSpan(delay.Delay));
+                            break;
+                        case MacroMouseMoveEvent mouseMove:
+
+                            // Mouse move event.
+                            var mouseMovePoint = ConvertPointToAbsolute(mouseMove.Location);
+                            _mouseSimulator.MoveMouseTo(mouseMovePoint.X, mouseMovePoint.Y);
+                            break;
+                        case MacroMouseDownEvent mouseDown:
+
+                            // Mouse down event.
+                            var mouseDownPoint = ConvertPointToAbsolute(mouseDown.Location);
+                            _mouseSimulator.MoveMouseTo(mouseDownPoint.X, mouseDownPoint.Y);
+                            switch (mouseDown.Button)
+                            {
+                                case System.Windows.Input.MouseButton.Left:
+                                    _mouseSimulator.LeftButtonDown();
+                                    break;
+                                case System.Windows.Input.MouseButton.Right:
+                                    _mouseSimulator.RightButtonDown();
+                                    break;
+                            }
+                            break;
+                        case MacroMouseUpEvent mouseUp:
+
+                            // Mouse up event.
+                            var mouseUpPoint = ConvertPointToAbsolute(mouseUp.Location);
+                            _mouseSimulator.MoveMouseTo(mouseUpPoint.X, mouseUpPoint.Y);
+                            switch (mouseUp.Button)
+                            {
+                                case System.Windows.Input.MouseButton.Left:
+                                    _mouseSimulator.LeftButtonUp();
+                                    break;
+                                case System.Windows.Input.MouseButton.Right:
+                                    _mouseSimulator.RightButtonUp();
+                                    break;
+                            }
+                            break;
+                        case MacroKeyDownEvent keyDown:
+
+                            // Key down event.
+                            _keyboardSimulator.KeyDown((Simulation.Native.VirtualKeyCode) keyDown.VirtualKeyCode);
+                            break;
+                        case MacroKeyUpEvent keyUp:
+
+                            // Key up event.
+                            _keyboardSimulator.KeyUp((Simulation.Native.VirtualKeyCode) keyUp.VirtualKeyCode);
+                            break;
+                        case MacroMouseWheelEvent mouseWheel:
+
+                            // Mouse wheel event.
+                            var mouseWheelPoint = ConvertPointToAbsolute(mouseWheel.Location);
+                            _mouseSimulator.MoveMouseTo(mouseWheelPoint.X, mouseWheelPoint.Y);
+                            _mouseSimulator.VerticalScroll(mouseWheel.Delta / 120);
+                            break;
+                    }
                 }
             }
 
@@ -201,10 +188,8 @@ namespace Silence.Macro
         /// </summary>
         public void PlayMacroAsync()
         {
-            macroThread = new Thread(PlayMacro);
-            macroThread.Start();
+            _macroThread = new Thread(PlayMacro);
+            _macroThread.Start();
         }
-
     }
-
 }

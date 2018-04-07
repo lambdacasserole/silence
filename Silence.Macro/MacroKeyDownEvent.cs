@@ -1,24 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Text;
 using System.Xml;
 
 namespace Silence.Macro
 {
-
     /// <summary>
     /// Represents a key down event that occurs during macro recording.
     /// </summary>
     public class MacroKeyDownEvent : MacroKeyEvent
     {
-
         /// <summary>
         /// Initialises a new instance of a macro key down event.
         /// </summary>
         /// <param name="virtualKeyCode">The virtual key code associated with the event.</param>
-        public MacroKeyDownEvent(int virtualKeyCode) 
-            : base(virtualKeyCode) 
+        public MacroKeyDownEvent(int virtualKeyCode) : base(virtualKeyCode)
         {
             // Straight to superclass constructor.
         }
@@ -27,14 +21,14 @@ namespace Silence.Macro
         /// Initialises a new instance of a macro key down event.
         /// </summary>
         /// <param name="element">The serialised XML element to initialise from.</param>
-        public MacroKeyDownEvent(XmlElement element) 
-            : base(0)
+        // ReSharper disable once SuggestBaseTypeForParameter
+        public MacroKeyDownEvent(XmlElement element) : base(0)
         {
             foreach (XmlElement current in element)
             {
                 switch (current.Name)
                 {
-                    case "VirtualKeyCode" :
+                    case "VirtualKeyCode":
                         VirtualKeyCode = int.Parse(current.InnerText);
                         break;
                 }
@@ -47,14 +41,12 @@ namespace Silence.Macro
         /// <returns></returns>
         public override string ToXml()
         {
-            StringBuilder str = new StringBuilder();
+            var str = new StringBuilder();
             str.AppendLine("<MacroKeyDownEvent>");
-            str.AppendLine("<VirtualKeyCode>" + VirtualKeyCode.ToString() + "</VirtualKeyCode>");
+            str.AppendLine($"<VirtualKeyCode>{VirtualKeyCode}</VirtualKeyCode>");
             str.AppendLine("</MacroKeyDownEvent>");
 
             return str.ToString();
         }
-
     }
-
 }

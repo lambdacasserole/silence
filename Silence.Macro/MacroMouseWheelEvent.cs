@@ -1,19 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Text;
 using System.Windows;
 using System.Xml;
 
 namespace Silence.Macro
 {
-
     /// <summary>
     /// Represents a mouse wheel event that occurs during macro recording.
     /// </summary>
-    class MacroMouseWheelEvent : MacroMouseEvent
+    public class MacroMouseWheelEvent : MacroMouseEvent
     {
-
         /// <summary>
         /// Gets or sets the delta value of the wheel rotation.
         /// </summary>
@@ -33,17 +28,17 @@ namespace Silence.Macro
         /// Initialises a new instance of a mouse wheel event.
         /// </summary>
         /// <param name="element">The serialised XML element to initialise from.</param>
-        public MacroMouseWheelEvent(XmlElement element) 
-            : base(new Point(0, 0))
+        // ReSharper disable once SuggestBaseTypeForParameter
+        public MacroMouseWheelEvent(XmlElement element) : base(new Point(0, 0))
         {
-            foreach(XmlElement current in element) 
+            foreach (XmlElement current in element)
             {
                 switch (current.Name)
                 {
-                    case "Location" :
+                    case "Location":
                         Location = Point.Parse(current.InnerText);
                         break;
-                    case "Delta" :
+                    case "Delta":
                         Delta = int.Parse(current.InnerText);
                         break;
                 }
@@ -56,7 +51,7 @@ namespace Silence.Macro
         /// <returns></returns>
         public override string ToXml()
         {
-            StringBuilder str = new StringBuilder();
+            var str = new StringBuilder();
             str.AppendLine("<MacroMouseWheelEvent>");
             str.AppendLine("<Location>" + Location.ToString() + "</Location>");
             str.AppendLine("<Delta>" + Delta.ToString() + "</Delta>");
@@ -64,7 +59,5 @@ namespace Silence.Macro
 
             return str.ToString();
         }
-
     }
-
 }

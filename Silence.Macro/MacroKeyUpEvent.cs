@@ -1,24 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Text;
 using System.Xml;
 
 namespace Silence.Macro
 {
-
     /// <summary>
     /// Represents a key up event that occurs during macro recording.
     /// </summary>
     public class MacroKeyUpEvent : MacroKeyEvent
     {
-
         /// <summary>
         /// Initialises a new instance of a macro key up event.
         /// </summary>
         /// <param name="virtualKeyCode">The virtual key code associated with the event.</param>
-        public MacroKeyUpEvent(int virtualKeyCode)
-            : base(virtualKeyCode)
+        public MacroKeyUpEvent(int virtualKeyCode) : base(virtualKeyCode)
         {
             // Straight to superclass constructor.
         }
@@ -27,8 +21,8 @@ namespace Silence.Macro
         /// Initialises a new instance of a macro key up event.
         /// </summary>
         /// <param name="element">The serialised XML element to initialise from.</param>
-        public MacroKeyUpEvent(XmlElement element)
-            : base(0)
+        // ReSharper disable once SuggestBaseTypeForParameter
+        public MacroKeyUpEvent(XmlElement element) : base(0)
         {
             foreach (XmlElement current in element)
             {
@@ -47,14 +41,12 @@ namespace Silence.Macro
         /// <returns></returns>
         public override string ToXml()
         {
-            StringBuilder str = new StringBuilder();
+            var str = new StringBuilder();
             str.AppendLine("<MacroKeyUpEvent>");
-            str.AppendLine("<VirtualKeyCode>" + VirtualKeyCode.ToString() + "</VirtualKeyCode>");
+            str.AppendLine($"<VirtualKeyCode>{VirtualKeyCode}</VirtualKeyCode>");
             str.AppendLine("</MacroKeyUpEvent>");
 
             return str.ToString();
         }
-
     }
-
 }

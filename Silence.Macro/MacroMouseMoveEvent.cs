@@ -1,19 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Text;
 using System.Windows;
 using System.Xml;
 
 namespace Silence.Macro
 {
-
     /// <summary>
     /// Represents a mouse move event that occurs during macro recording.
     /// </summary>
-    class MacroMouseMoveEvent : MacroMouseEvent
+    public class MacroMouseMoveEvent : MacroMouseEvent
     {
-
         /// <summary>
         /// Initialises a new instance of a mouse move event.
         /// </summary>
@@ -27,8 +22,8 @@ namespace Silence.Macro
         /// Initialises a new instance of a macro mouse move event.
         /// </summary>
         /// <param name="element">The serialised XML element to initialise from.</param>
-        public MacroMouseMoveEvent(XmlElement element)
-            : base(new Point(0, 0))
+        // ReSharper disable once SuggestBaseTypeForParameter
+        public MacroMouseMoveEvent(XmlElement element) : base(new Point(0, 0))
         {
             foreach (XmlElement current in element)
             {
@@ -47,14 +42,12 @@ namespace Silence.Macro
         /// <returns></returns>
         public override string ToXml()
         {
-            StringBuilder str = new StringBuilder();
+            var str = new StringBuilder();
             str.AppendLine("<MacroMouseMoveEvent>");
-            str.AppendLine("<Location>" + Location.ToString() + "</Location>");
+            str.AppendLine($"<Location>{Location}</Location>");
             str.AppendLine("</MacroMouseMoveEvent>");
 
             return str.ToString();
         }
-
     }
-
 }

@@ -1,27 +1,23 @@
-﻿using Silence.Hooking.Windows;
+﻿using Silence.Hooking;
+using Silence.Hooking.Windows;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace Silence.Macro
 {
-
     /// <summary>
     /// Allows recording sequences of mouse and keyboard events using global input hooks.
     /// </summary>
     public class MacroRecorder : IDisposable
     {
-
         /// <summary>
         /// Holds the underlying mouse/keyboard hook.
         /// </summary>
-        private HookManager underlyingHook;
+        private readonly HookManager _hook;
 
         /// <summary>
         /// Holds the time in ticks that the last event occurred.
         /// </summary>
-        private long lastEventTime;
+        private long _lastEventTime;
 
         /// <summary>
         /// Gets the macro currently being recorded.
@@ -38,14 +34,14 @@ namespace Silence.Macro
         /// </summary>
         public MacroRecorder()
         {
-            underlyingHook = new HookManager();
+            _hook = new HookManager();
 
-            underlyingHook.KeyDown += underlyingHook_KeyDown;
-            underlyingHook.KeyUp += underlyingHook_KeyUp;
-            underlyingHook.MouseDown += underlyingHook_MouseDown;
-            underlyingHook.MouseUp += underlyingHook_MouseUp;
-            underlyingHook.MouseMove += underlyingHook_MouseMove;
-            underlyingHook.MouseWheel += underlyingHook_MouseWheel;
+            _hook.KeyDown += HookKeyDown;
+            _hook.KeyUp += HookKeyUp;
+            _hook.MouseDown += HookMouseDown;
+            _hook.MouseUp += HookMouseUp;
+            _hook.MouseMove += HookMouseMove;
+            _hook.MouseWheel += HookMouseWheel;
         }
 
         /// <summary>
@@ -53,7 +49,7 @@ namespace Silence.Macro
         /// </summary>
         public void Dispose()
         {
-            underlyingHook.Dispose();
+            _hook.Dispose();
         }
 
         /// <summary>
@@ -61,9 +57,9 @@ namespace Silence.Macro
         /// </summary>
         private void AddDelayEvent()
         {
-            long timeNow = DateTime.Now.Ticks;
-            CurrentMacro.AddEvent(new MacroDelayEvent(timeNow - lastEventTime));
-            lastEventTime = timeNow;
+            var timeNow = DateTime.Now.Ticks;
+            CurrentMacro.AddEvent(new MacroDelayEvent(timeNow - _lastEventTime));
+            _lastEventTime = timeNow;
         }
 
         /// <summary>
@@ -92,7 +88,7 @@ namespace Silence.Macro
             {
                 Clear();
             }
-            lastEventTime = DateTime.Now.Ticks;
+            _lastEventTime = DateTime.Now.Ticks;
             IsRunning = true;
         }
 
@@ -104,9 +100,8 @@ namespace Silence.Macro
             IsRunning = false;
         }
 
-        private void underlyingHook_KeyDown(object sender, Silence.Hooking.GlobalKeyEventHandlerArgs e)
+        private void HookKeyDown(object sender, GlobalKeyEventHandlerArgs e)
         {
-            
             if (IsRunning)
             {
                 AddDelayEvent();
@@ -114,7 +109,7 @@ namespace Silence.Macro
             }
         }
 
-        private void underlyingHook_KeyUp(object sender, Silence.Hooking.GlobalKeyEventHandlerArgs e)
+        private void HookKeyUp(object sender, GlobalKeyEventHandlerArgs e)
         {
             if (IsRunning)
             {
@@ -123,7 +118,7 @@ namespace Silence.Macro
             }
         }
 
-        private void underlyingHook_MouseDown(object sender, Silence.Hooking.GlobalMouseEventHandlerArgs e)
+        private void HookMouseDown(object sender, GlobalMouseEventHandlerArgs e)
         {
             if (IsRunning)
             {
@@ -132,7 +127,7 @@ namespace Silence.Macro
             }
         }
 
-        private void underlyingHook_MouseUp(object sender, Silence.Hooking.GlobalMouseEventHandlerArgs e)
+        private void HookMouseUp(object sender, GlobalMouseEventHandlerArgs e)
         {
             if (IsRunning)
             {
@@ -141,7 +136,7 @@ namespace Silence.Macro
             }
         }
 
-        private void underlyingHook_MouseMove(object sender, Silence.Hooking.GlobalMouseEventHandlerArgs e)
+        private void HookMouseMove(object sender, GlobalMouseEventHandlerArgs e)
         {
             if (IsRunning)
             {
@@ -150,7 +145,7 @@ namespace Silence.Macro
             }
         }
 
-        private void underlyingHook_MouseWheel(object sender, Silence.Hooking.GlobalMouseEventHandlerArgs e)
+        private void HookMouseWheel(object sender, GlobalMouseEventHandlerArgs e)
         {
             if (IsRunning)
             {
@@ -158,7 +153,5 @@ namespace Silence.Macro
                 CurrentMacro.AddEvent(new MacroMouseWheelEvent(e.Point, e.Delta));
             }
         }
-
     }
-
 }

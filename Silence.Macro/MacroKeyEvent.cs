@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace Silence.Macro
+﻿namespace Silence.Macro
 {
     /// <summary>
     /// Represents a keyboard event that occurs during macro recording.

@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using System.Windows;
 using System.Windows.Input;
@@ -8,13 +6,11 @@ using System.Xml;
 
 namespace Silence.Macro
 {
-
     /// <summary>
     /// Represents a mouse button down event that occurs during macro recording.
     /// </summary>
-    class MacroMouseDownEvent : MacroMouseEvent
+    public class MacroMouseDownEvent : MacroMouseEvent
     {
-
         /// <summary>
         /// Gets or sets the mouse button associated with the event.
         /// </summary>
@@ -35,8 +31,8 @@ namespace Silence.Macro
         /// Initialises a new instance of a macro mouse down event.
         /// </summary>
         /// <param name="element">The serialised XML element to initialise from.</param>
-        public MacroMouseDownEvent(XmlElement element)
-            : base(new Point(0, 0))
+        // ReSharper disable once SuggestBaseTypeForParameter
+        public MacroMouseDownEvent(XmlElement element) : base(new Point(0, 0))
         {
             foreach (XmlElement current in element)
             {
@@ -58,15 +54,13 @@ namespace Silence.Macro
         /// <returns></returns>
         public override string ToXml()
         {
-            StringBuilder str = new StringBuilder();
+            var str = new StringBuilder();
             str.AppendLine("<MacroMouseDownEvent>");
-            str.AppendLine("<Location>" + Location.ToString() + "</Location>");
-            str.AppendLine("<Button>" + Button.ToString() + "</Button>");
+            str.AppendLine($"<Location>{Location}</Location>");
+            str.AppendLine($"<Button>{Button}</Button>");
             str.AppendLine("</MacroMouseDownEvent>");
 
             return str.ToString();
         }
-
     }
-
 }

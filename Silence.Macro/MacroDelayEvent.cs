@@ -26,11 +26,14 @@ namespace Silence.Macro
         /// Initialises a new instance of a macro delay event.
         /// </summary>
         /// <param name="element">The serialised XML element to initialise from.</param>
+        // ReSharper disable once SuggestBaseTypeForParameter
         public MacroDelayEvent(XmlElement element)
         {
-            foreach(XmlElement current in element) {
-                switch(current.Name) {
-                    case "Delay" :
+            foreach (XmlElement current in element)
+            {
+                switch (current.Name)
+                {
+                    case "Delay":
                         Delay = int.Parse(current.InnerText);
                         break;
                 }
