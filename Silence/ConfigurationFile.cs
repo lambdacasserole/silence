@@ -20,6 +20,7 @@
 		/// </summary>
 		public ConfigurationFile()
 		{
+            // UI Defaults.
 			LanguageCode = "en";
 			ThemeColor = new ThemeColor
 			{
