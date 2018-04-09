@@ -3,28 +3,40 @@
 namespace Silence.Simulation.Native
 {
     /// <summary>
-    /// Specifies various aspects of a keystroke. This member can be certain combinations of the following values.
+    /// Specifies various aspects of a keystroke.
     /// </summary>
+    /// <remarks>https://msdn.microsoft.com/en-us/library/windows/desktop/ms646271(v=vs.85).aspx</remarks>
     [Flags]
-    internal enum KeyboardFlag : uint // UInt32
+    internal enum KeyboardFlag : uint
     {
+        /* This file contains documentation from MSDN governed according to the license agreement:
+         * https://msdn.microsoft.com/en-us/cc300389.aspx
+         * 
+         * Such documentation is reproduced here as a reasonable measure taken to document the API that this software uses
+         * in order to faciliate development, as permitted under the license agreement (Section 3). The full version of 
+         * such documentation is linked to in the remarks section of each relevant method's documentation block.
+         * 
+         * Such documentation falls under the copyright notice:
+         * © 2013 Microsoft Corporation. All rights reserved.
+         */
+
         /// <summary>
-        /// KEYEVENTF_EXTENDEDKEY = 0x0001 (If specified, the scan code was preceded by a prefix byte that has the value 0xE0 (224).)
+        /// If specified, the scan code was preceded by a prefix byte that has the value 0xE0 (224).
         /// </summary>
         ExtendedKey = 0x0001,
 
         /// <summary>
-        /// KEYEVENTF_KEYUP = 0x0002 (If specified, the key is being released. If not specified, the key is being pressed.)
+        /// If specified, the key is being released.
         /// </summary>
         KeyUp = 0x0002,
 
         /// <summary>
-        /// KEYEVENTF_UNICODE = 0x0004 (If specified, wScan identifies the key and wVk is ignored.)
+        /// If specified, wScan identifies the key and wVk is ignored.
         /// </summary>
         Unicode = 0x0004,
 
         /// <summary>
-        /// KEYEVENTF_SCANCODE = 0x0008 (Windows 2000/XP: If specified, the system synthesizes a VK_PACKET keystroke. The wVk parameter must be zero. This flag can only be combined with the KEYEVENTF_KEYUP flag. For more information, see the Remarks section.)
+        /// If specified, the system synthesizes a VK_PACKET keystroke.
         /// </summary>
         ScanCode = 0x0008,
     }

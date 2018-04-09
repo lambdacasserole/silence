@@ -1,30 +1,30 @@
-﻿using System;
-
-namespace Silence.Simulation.Native
+﻿namespace Silence.Simulation.Native
 {
-#pragma warning disable 649
     /// <summary>
-    /// The INPUT structure is used by SendInput to store information for synthesizing input events such as keystrokes, mouse movement, and mouse clicks. (see: http://msdn.microsoft.com/en-us/library/ms646270(VS.85).aspx)
-    /// Declared in Winuser.h, include Windows.h
+    /// Used by SendInput to store information for synthesizing input events such as keystrokes, mouse movement, and mouse clicks.
     /// </summary>
-    /// <remarks>
-    /// This structure contains information identical to that used in the parameter list of the keybd_event or mouse_event function.
-    /// Windows 2000/XP: INPUT_KEYBOARD supports nonkeyboard input methods, such as handwriting recognition or voice recognition, as if it were text input by using the KEYEVENTF_UNICODE flag. For more information, see the remarks section of KEYBDINPUT.
-    /// </remarks>
-    internal struct INPUT
+    /// <remarks>https://msdn.microsoft.com/en-us/library/windows/desktop/ms646270(v=vs.85).aspx</remarks>
+    internal struct Input
     {
-        /// <summary>
-        /// Specifies the type of the input event. This member can be one of the following values. 
-        /// <see cref="InputType.Mouse"/> - The event is a mouse event. Use the mi structure of the union.
-        /// <see cref="InputType.Keyboard"/> - The event is a keyboard event. Use the ki structure of the union.
-        /// <see cref="InputType.Hardware"/> - Windows 95/98/Me: The event is from input hardware other than a keyboard or mouse. Use the hi structure of the union.
-        /// </summary>
-        public UInt32 Type;
+        /* This file contains documentation from MSDN governed according to the license agreement:
+         * https://msdn.microsoft.com/en-us/cc300389.aspx
+         * 
+         * Such documentation is reproduced here as a reasonable measure taken to document the API that this software uses
+         * in order to faciliate development, as permitted under the license agreement (Section 3). The full version of 
+         * such documentation is linked to in the remarks section of each relevant method's documentation block.
+         * 
+         * Such documentation falls under the copyright notice:
+         * © 2013 Microsoft Corporation. All rights reserved.
+         */
 
         /// <summary>
-        /// The data structure that contains information about the simulated Mouse, Keyboard or Hardware event.
+        /// The type of the input event.
         /// </summary>
-        public MOUSEKEYBDHARDWAREINPUT Data;
+        public uint type;
+
+        /// <summary>
+        /// The data structure that contains information about the simulated mouse, keyboard or hardware event.
+        /// </summary>
+        public MouseKeyboardHardwareInput data;
     }
-#pragma warning restore 649
 }

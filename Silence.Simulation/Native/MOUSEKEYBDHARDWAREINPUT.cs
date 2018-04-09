@@ -7,7 +7,7 @@ namespace Silence.Simulation.Native
     /// The combined/overlayed structure that includes Mouse, Keyboard and Hardware Input message data (see: http://msdn.microsoft.com/en-us/library/ms646270(VS.85).aspx)
     /// </summary>
     [StructLayout(LayoutKind.Explicit)]
-    internal struct MOUSEKEYBDHARDWAREINPUT
+    internal struct MouseKeyboardHardwareInput
     {
         /// <summary>
         /// The <see cref="MOUSEINPUT"/> definition.
@@ -16,16 +16,16 @@ namespace Silence.Simulation.Native
         public MOUSEINPUT Mouse;
 
         /// <summary>
-        /// The <see cref="KEYBDINPUT"/> definition.
+        /// The <see cref="KeyboardInput"/> definition.
         /// </summary>
         [FieldOffset(0)]
-        public KEYBDINPUT Keyboard;
+        public KeyboardInput Keyboard;
 
         /// <summary>
-        /// The <see cref="HARDWAREINPUT"/> definition.
+        /// The <see cref="HardwareInput"/> definition.
         /// </summary>
         [FieldOffset(0)]
-        public HARDWAREINPUT Hardware;
+        public HardwareInput Hardware;
     }
 #pragma warning restore 649
 }

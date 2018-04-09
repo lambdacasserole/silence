@@ -50,10 +50,10 @@
     <Compile Include="KeyboardSimulator.cs" />
     <Compile Include="MouseButton.cs" />
     <Compile Include="MouseSimulator.cs" />
-    <Compile Include="Native\HARDWAREINPUT.cs" />
-    <Compile Include="Native\INPUT.cs" />
+    <Compile Include="Native\HardwareInput.cs" />
+    <Compile Include="Native\Input.cs" />
     <Compile Include="Native\InputType.cs" />
-    <Compile Include="Native\KEYBDINPUT.cs" />
+    <Compile Include="Native\KeyboardInput.cs" />
     <Compile Include="Native\KeyboardFlag.cs" />
     <Compile Include="Native\MouseFlag.cs" />
     <Compile Include="Native\MOUSEINPUT.cs" />

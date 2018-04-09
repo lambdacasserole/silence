@@ -13,12 +13,12 @@ namespace Silence.Simulation
         private readonly IInputSimulator _inputSimulator;
 
         /// <summary>
-        /// The instance of the <see cref="IInputMessageDispatcher"/> to use for dispatching <see cref="INPUT"/> messages.
+        /// The instance of the <see cref="IInputMessageDispatcher"/> to use for dispatching <see cref="Input"/> messages.
         /// </summary>
         private readonly IInputMessageDispatcher _messageDispatcher;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="KeyboardSimulator"/> class using an instance of a <see cref="WindowsInputMessageDispatcher"/> for dispatching <see cref="INPUT"/> messages.
+        /// Initializes a new instance of the <see cref="KeyboardSimulator"/> class using an instance of a <see cref="WindowsInputMessageDispatcher"/> for dispatching <see cref="Input"/> messages.
         /// </summary>
         /// <param name="inputSimulator">The <see cref="IInputSimulator"/> that owns this instance.</param>
         public KeyboardSimulator(IInputSimulator inputSimulator)
@@ -30,10 +30,10 @@ namespace Silence.Simulation
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="KeyboardSimulator"/> class using the specified <see cref="IInputMessageDispatcher"/> for dispatching <see cref="INPUT"/> messages.
+        /// Initializes a new instance of the <see cref="KeyboardSimulator"/> class using the specified <see cref="IInputMessageDispatcher"/> for dispatching <see cref="Input"/> messages.
         /// </summary>
         /// <param name="inputSimulator">The <see cref="IInputSimulator"/> that owns this instance.</param>
-        /// <param name="messageDispatcher">The <see cref="IInputMessageDispatcher"/> to use for dispatching <see cref="INPUT"/> messages.</param>
+        /// <param name="messageDispatcher">The <see cref="IInputMessageDispatcher"/> to use for dispatching <see cref="Input"/> messages.</param>
         /// <exception cref="InvalidOperationException">If null is passed as the <paramref name="messageDispatcher"/>.</exception>
         internal KeyboardSimulator(IInputSimulator inputSimulator, IInputMessageDispatcher messageDispatcher)
         {
@@ -42,7 +42,7 @@ namespace Silence.Simulation
             if (messageDispatcher == null)
                 throw new InvalidOperationException(
                     string.Format("The {0} cannot operate with a null {1}. Please provide a valid {1} instance to use for dispatching {2} messages.",
-                    typeof(KeyboardSimulator).Name, typeof(IInputMessageDispatcher).Name, typeof(INPUT).Name));
+                    typeof(KeyboardSimulator).Name, typeof(IInputMessageDispatcher).Name, typeof(Input).Name));
 
             _inputSimulator = inputSimulator;
             _messageDispatcher = messageDispatcher;
@@ -76,10 +76,10 @@ namespace Silence.Simulation
         }
 
         /// <summary>
-        /// Sends the list of <see cref="INPUT"/> messages using the <see cref="IInputMessageDispatcher"/> instance.
+        /// Sends the list of <see cref="Input"/> messages using the <see cref="IInputMessageDispatcher"/> instance.
         /// </summary>
-        /// <param name="inputList">The <see cref="System.Array"/> of <see cref="INPUT"/> messages to send.</param>
-        private void SendSimulatedInput(INPUT[] inputList)
+        /// <param name="inputList">The <see cref="System.Array"/> of <see cref="Input"/> messages to send.</param>
+        private void SendSimulatedInput(Input[] inputList)
         {
             _messageDispatcher.DispatchInput(inputList);
         }

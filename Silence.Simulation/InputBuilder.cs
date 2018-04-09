@@ -6,49 +6,49 @@ using Silence.Simulation.Native;
 namespace Silence.Simulation
 {
     /// <summary>
-    /// A helper class for building a list of <see cref="INPUT"/> messages ready to be sent to the native Windows API.
+    /// A helper class for building a list of <see cref="Input"/> messages ready to be sent to the native Windows API.
     /// </summary>
-    internal class InputBuilder : IEnumerable<INPUT>
+    internal class InputBuilder : IEnumerable<Input>
     {
         /// <summary>
-        /// The public list of <see cref="INPUT"/> messages being built by this instance.
+        /// The public list of <see cref="Input"/> messages being built by this instance.
         /// </summary>
-        private readonly List<INPUT> _inputList;
+        private readonly List<Input> _inputList;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="InputBuilder"/> class.
         /// </summary>
         public InputBuilder()
         {
-            _inputList = new List<INPUT>();
+            _inputList = new List<Input>();
         }
 
         /// <summary>
-        /// Returns the list of <see cref="INPUT"/> messages as a <see cref="System.Array"/> of <see cref="INPUT"/> messages.
+        /// Returns the list of <see cref="Input"/> messages as a <see cref="System.Array"/> of <see cref="Input"/> messages.
         /// </summary>
-        /// <returns>The <see cref="System.Array"/> of <see cref="INPUT"/> messages.</returns>
-        public INPUT[] ToArray()
+        /// <returns>The <see cref="System.Array"/> of <see cref="Input"/> messages.</returns>
+        public Input[] ToArray()
         {
             return _inputList.ToArray();
         }
 
         /// <summary>
-        /// Returns an enumerator that iterates through the list of <see cref="INPUT"/> messages.
+        /// Returns an enumerator that iterates through the list of <see cref="Input"/> messages.
         /// </summary>
         /// <returns>
-        /// A <see cref="T:System.Collections.Generic.IEnumerator`1"/> that can be used to iterate through the list of <see cref="INPUT"/> messages.
+        /// A <see cref="T:System.Collections.Generic.IEnumerator`1"/> that can be used to iterate through the list of <see cref="Input"/> messages.
         /// </returns>
         /// <filterpriority>1</filterpriority>
-        public IEnumerator<INPUT> GetEnumerator()
+        public IEnumerator<Input> GetEnumerator()
         {
             return _inputList.GetEnumerator();
         }
 
         /// <summary>
-        /// Returns an enumerator that iterates through the list of <see cref="INPUT"/> messages.
+        /// Returns an enumerator that iterates through the list of <see cref="Input"/> messages.
         /// </summary>
         /// <returns>
-        /// An <see cref="T:System.Collections.IEnumerator"/> object that can be used to iterate through the list of <see cref="INPUT"/> messages.
+        /// An <see cref="T:System.Collections.IEnumerator"/> object that can be used to iterate through the list of <see cref="Input"/> messages.
         /// </returns>
         /// <filterpriority>2</filterpriority>
         IEnumerator IEnumerable.GetEnumerator()
@@ -57,10 +57,10 @@ namespace Silence.Simulation
         }
 
         /// <summary>
-        /// Gets the <see cref="INPUT"/> at the specified position.
+        /// Gets the <see cref="Input"/> at the specified position.
         /// </summary>
-        /// <value>The <see cref="INPUT"/> message at the specified position.</value>
-        public INPUT this[int position]
+        /// <value>The <see cref="Input"/> message at the specified position.</value>
+        public Input this[int position]
         {
             get
             {
@@ -109,26 +109,26 @@ namespace Silence.Simulation
         }
 
         /// <summary>
-        /// Adds a key down to the list of <see cref="INPUT"/> messages.
+        /// Adds a key down to the list of <see cref="Input"/> messages.
         /// </summary>
         /// <param name="keyCode">The <see cref="VirtualKeyCode"/>.</param>
         /// <returns>This <see cref="InputBuilder"/> instance.</returns>
         public InputBuilder AddKeyDown(VirtualKeyCode keyCode)
         {
             var down =
-                new INPUT
+                new Input
                     {
-                        Type = (UInt32) InputType.Keyboard,
-                        Data =
+                        type = (UInt32) InputType.Keyboard,
+                        data =
                             {
                                 Keyboard =
-                                    new KEYBDINPUT
+                                    new KeyboardInput
                                         {
-                                            KeyCode = (UInt16) keyCode,
-                                            Scan = 0,
-                                            Flags = IsExtendedKey(keyCode) ? (UInt32) KeyboardFlag.ExtendedKey : 0,
-                                            Time = 0,
-                                            ExtraInfo = IntPtr.Zero
+                                            wVk = (UInt16) keyCode,
+                                            wScan = 0,
+                                            dwFlags = IsExtendedKey(keyCode) ? (UInt32) KeyboardFlag.ExtendedKey : 0,
+                                            time = 0,
+                                            dwExtraInfo = IntPtr.Zero
                                         }
                             }
                     };
@@ -138,28 +138,28 @@ namespace Silence.Simulation
         }
 
         /// <summary>
-        /// Adds a key up to the list of <see cref="INPUT"/> messages.
+        /// Adds a key up to the list of <see cref="Input"/> messages.
         /// </summary>
         /// <param name="keyCode">The <see cref="VirtualKeyCode"/>.</param>
         /// <returns>This <see cref="InputBuilder"/> instance.</returns>
         public InputBuilder AddKeyUp(VirtualKeyCode keyCode)
         {
             var up =
-                new INPUT
+                new Input
                     {
-                        Type = (UInt32) InputType.Keyboard,
-                        Data =
+                        type = (UInt32) InputType.Keyboard,
+                        data =
                             {
                                 Keyboard =
-                                    new KEYBDINPUT
+                                    new KeyboardInput
                                         {
-                                            KeyCode = (UInt16) keyCode,
-                                            Scan = 0,
-                                            Flags = (UInt32) (IsExtendedKey(keyCode)
+                                            wVk = (UInt16) keyCode,
+                                            wScan = 0,
+                                            dwFlags = (UInt32) (IsExtendedKey(keyCode)
                                                                   ? KeyboardFlag.KeyUp | KeyboardFlag.ExtendedKey
                                                                   : KeyboardFlag.KeyUp),
-                                            Time = 0,
-                                            ExtraInfo = IntPtr.Zero
+                                            time = 0,
+                                            dwExtraInfo = IntPtr.Zero
                                         }
                             }
                     };
@@ -169,7 +169,7 @@ namespace Silence.Simulation
         }
 
         /// <summary>
-        /// Adds a key press to the list of <see cref="INPUT"/> messages which is equivalent to a key down followed by a key up.
+        /// Adds a key press to the list of <see cref="Input"/> messages which is equivalent to a key down followed by a key up.
         /// </summary>
         /// <param name="keyCode">The <see cref="VirtualKeyCode"/>.</param>
         /// <returns>This <see cref="InputBuilder"/> instance.</returns>
@@ -181,45 +181,45 @@ namespace Silence.Simulation
         }
 
         /// <summary>
-        /// Adds the character to the list of <see cref="INPUT"/> messages.
+        /// Adds the character to the list of <see cref="Input"/> messages.
         /// </summary>
-        /// <param name="character">The <see cref="System.Char"/> to be added to the list of <see cref="INPUT"/> messages.</param>
+        /// <param name="character">The <see cref="System.Char"/> to be added to the list of <see cref="Input"/> messages.</param>
         /// <returns>This <see cref="InputBuilder"/> instance.</returns>
         public InputBuilder AddCharacter(char character)
         {
             UInt16 scanCode = character;
 
-            var down = new INPUT
+            var down = new Input
                            {
-                               Type = (UInt32)InputType.Keyboard,
-                               Data =
+                               type = (UInt32)InputType.Keyboard,
+                               data =
                                    {
                                        Keyboard =
-                                           new KEYBDINPUT
+                                           new KeyboardInput
                                                {
-                                                   KeyCode = 0,
-                                                   Scan = scanCode,
-                                                   Flags = (UInt32)KeyboardFlag.Unicode,
-                                                   Time = 0,
-                                                   ExtraInfo = IntPtr.Zero
+                                                   wVk = 0,
+                                                   wScan = scanCode,
+                                                   dwFlags = (UInt32)KeyboardFlag.Unicode,
+                                                   time = 0,
+                                                   dwExtraInfo = IntPtr.Zero
                                                }
                                    }
                            };
 
-            var up = new INPUT
+            var up = new Input
                          {
-                             Type = (UInt32)InputType.Keyboard,
-                             Data =
+                             type = (UInt32)InputType.Keyboard,
+                             data =
                                  {
                                      Keyboard =
-                                         new KEYBDINPUT
+                                         new KeyboardInput
                                              {
-                                                 KeyCode = 0,
-                                                 Scan = scanCode,
-                                                 Flags =
+                                                 wVk = 0,
+                                                 wScan = scanCode,
+                                                 dwFlags =
                                                      (UInt32)(KeyboardFlag.KeyUp | KeyboardFlag.Unicode),
-                                                 Time = 0,
-                                                 ExtraInfo = IntPtr.Zero
+                                                 time = 0,
+                                                 dwExtraInfo = IntPtr.Zero
                                              }
                                  }
                          };
@@ -229,8 +229,8 @@ namespace Silence.Simulation
             // we need to include the KEYEVENTF_EXTENDEDKEY flag in the Flags property. 
             if ((scanCode & 0xFF00) == 0xE000)
             {
-                down.Data.Keyboard.Flags |= (UInt32)KeyboardFlag.ExtendedKey;
-                up.Data.Keyboard.Flags |= (UInt32)KeyboardFlag.ExtendedKey;
+                down.data.Keyboard.dwFlags |= (UInt32)KeyboardFlag.ExtendedKey;
+                up.data.Keyboard.dwFlags |= (UInt32)KeyboardFlag.ExtendedKey;
             }
 
             _inputList.Add(down);
@@ -270,10 +270,10 @@ namespace Silence.Simulation
         /// <returns>This <see cref="InputBuilder"/> instance.</returns>
         public InputBuilder AddRelativeMouseMovement(int x, int y)
         {
-            var movement = new INPUT { Type = (UInt32)InputType.Mouse };
-            movement.Data.Mouse.Flags = (UInt32)MouseFlag.Move;
-            movement.Data.Mouse.X = x;
-            movement.Data.Mouse.Y = y;
+            var movement = new Input { type = (UInt32)InputType.Mouse };
+            movement.data.Mouse.Flags = (UInt32)MouseFlag.Move;
+            movement.data.Mouse.X = x;
+            movement.data.Mouse.Y = y;
 
             _inputList.Add(movement);
 
@@ -288,10 +288,10 @@ namespace Silence.Simulation
         /// <returns>This <see cref="InputBuilder"/> instance.</returns>
         public InputBuilder AddAbsoluteMouseMovement(int absoluteX, int absoluteY)
         {
-            var movement = new INPUT { Type = (UInt32)InputType.Mouse };
-            movement.Data.Mouse.Flags = (UInt32)(MouseFlag.Move | MouseFlag.Absolute);
-            movement.Data.Mouse.X = absoluteX;
-            movement.Data.Mouse.Y = absoluteY;
+            var movement = new Input { type = (UInt32)InputType.Mouse };
+            movement.data.Mouse.Flags = (UInt32)(MouseFlag.Move | MouseFlag.Absolute);
+            movement.data.Mouse.X = absoluteX;
+            movement.data.Mouse.Y = absoluteY;
 
             _inputList.Add(movement);
 
@@ -306,10 +306,10 @@ namespace Silence.Simulation
         /// <returns>This <see cref="InputBuilder"/> instance.</returns>
         public InputBuilder AddAbsoluteMouseMovementOnVirtualDesktop(int absoluteX, int absoluteY)
         {
-            var movement = new INPUT { Type = (UInt32)InputType.Mouse };
-            movement.Data.Mouse.Flags = (UInt32)(MouseFlag.Move | MouseFlag.Absolute | MouseFlag.VirtualDesk);
-            movement.Data.Mouse.X = absoluteX;
-            movement.Data.Mouse.Y = absoluteY;
+            var movement = new Input { type = (UInt32)InputType.Mouse };
+            movement.data.Mouse.Flags = (UInt32)(MouseFlag.Move | MouseFlag.Absolute | MouseFlag.VirtualDesk);
+            movement.data.Mouse.X = absoluteX;
+            movement.data.Mouse.Y = absoluteY;
 
             _inputList.Add(movement);
 
@@ -323,8 +323,8 @@ namespace Silence.Simulation
         /// <returns>This <see cref="InputBuilder"/> instance.</returns>
         public InputBuilder AddMouseButtonDown(MouseButton button)
         {
-            var buttonDown = new INPUT { Type = (UInt32)InputType.Mouse };
-            buttonDown.Data.Mouse.Flags = (UInt32)ToMouseButtonDownFlag(button);
+            var buttonDown = new Input { type = (UInt32)InputType.Mouse };
+            buttonDown.data.Mouse.Flags = (UInt32)ToMouseButtonDownFlag(button);
 
             _inputList.Add(buttonDown);
 
@@ -338,9 +338,9 @@ namespace Silence.Simulation
         /// <returns>This <see cref="InputBuilder"/> instance.</returns>
         public InputBuilder AddMouseXButtonDown(int xButtonId)
         {
-            var buttonDown = new INPUT { Type = (UInt32)InputType.Mouse };
-            buttonDown.Data.Mouse.Flags = (UInt32)MouseFlag.XDown;
-            buttonDown.Data.Mouse.MouseData = (UInt32)xButtonId;
+            var buttonDown = new Input { type = (UInt32)InputType.Mouse };
+            buttonDown.data.Mouse.Flags = (UInt32)MouseFlag.XDown;
+            buttonDown.data.Mouse.MouseData = (UInt32)xButtonId;
             _inputList.Add(buttonDown);
 
             return this;
@@ -353,8 +353,8 @@ namespace Silence.Simulation
         /// <returns>This <see cref="InputBuilder"/> instance.</returns>
         public InputBuilder AddMouseButtonUp(MouseButton button)
         {
-            var buttonUp = new INPUT { Type = (UInt32)InputType.Mouse };
-            buttonUp.Data.Mouse.Flags = (UInt32)ToMouseButtonUpFlag(button);
+            var buttonUp = new Input { type = (UInt32)InputType.Mouse };
+            buttonUp.data.Mouse.Flags = (UInt32)ToMouseButtonUpFlag(button);
             _inputList.Add(buttonUp);
 
             return this;
@@ -367,9 +367,9 @@ namespace Silence.Simulation
         /// <returns>This <see cref="InputBuilder"/> instance.</returns>
         public InputBuilder AddMouseXButtonUp(int xButtonId)
         {
-            var buttonUp = new INPUT { Type = (UInt32)InputType.Mouse };
-            buttonUp.Data.Mouse.Flags = (UInt32)MouseFlag.XUp;
-            buttonUp.Data.Mouse.MouseData = (UInt32)xButtonId;
+            var buttonUp = new Input { type = (UInt32)InputType.Mouse };
+            buttonUp.data.Mouse.Flags = (UInt32)MouseFlag.XUp;
+            buttonUp.data.Mouse.MouseData = (UInt32)xButtonId;
             _inputList.Add(buttonUp);
 
             return this;
@@ -422,9 +422,9 @@ namespace Silence.Simulation
         /// <returns>This <see cref="InputBuilder"/> instance.</returns>
         public InputBuilder AddMouseVerticalWheelScroll(int scrollAmount)
         {
-            var scroll = new INPUT { Type = (UInt32)InputType.Mouse };
-            scroll.Data.Mouse.Flags = (UInt32)MouseFlag.VerticalWheel;
-            scroll.Data.Mouse.MouseData = (UInt32)scrollAmount;
+            var scroll = new Input { type = (UInt32)InputType.Mouse };
+            scroll.data.Mouse.Flags = (UInt32)MouseFlag.VerticalWheel;
+            scroll.data.Mouse.MouseData = (UInt32)scrollAmount;
 
             _inputList.Add(scroll);
 
@@ -438,9 +438,9 @@ namespace Silence.Simulation
         /// <returns>This <see cref="InputBuilder"/> instance.</returns>
         public InputBuilder AddMouseHorizontalWheelScroll(int scrollAmount)
         {
-            var scroll = new INPUT { Type = (UInt32)InputType.Mouse };
-            scroll.Data.Mouse.Flags = (UInt32)MouseFlag.HorizontalWheel;
-            scroll.Data.Mouse.MouseData = (UInt32)scrollAmount;
+            var scroll = new Input { type = (UInt32)InputType.Mouse };
+            scroll.data.Mouse.Flags = (UInt32)MouseFlag.HorizontalWheel;
+            scroll.data.Mouse.MouseData = (UInt32)scrollAmount;
 
             _inputList.Add(scroll);
 
