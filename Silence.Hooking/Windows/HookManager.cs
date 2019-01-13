@@ -4,13 +4,11 @@ using System.Collections.Generic;
 
 namespace Silence.Hooking.Windows
 {
-
     /// <summary>
     /// Provides events and methods for easily managing global input events regardless of application focus.
     /// </summary>
     public partial class HookManager : IDisposable 
     {
-
         /// <summary>
         /// Raised whenever the global mouse hook detects a mouse move action.
         /// </summary>
@@ -154,7 +152,5 @@ namespace Silence.Hooking.Windows
             ForceUnsunscribeFromGlobalMouseEvents();
 
         }
-
     }
-
 }

@@ -2,13 +2,11 @@ using System;
 
 namespace Silence.Hooking
 {
-
     /// <summary>
     /// Represents a set of event arguments passed into the handler for a global key event.
     /// </summary>
     public class GlobalKeyEventHandlerArgs : HandleableEventArgs
     {
-
         /// <summary>
         /// A virtual-key code. The code must be a value in the range 1 to 254.
         /// </summary>
@@ -44,15 +42,11 @@ namespace Silence.Hooking
         /// <param name="extraInfo">Additional information associated with the message.</param>
         public GlobalKeyEventHandlerArgs(int virtualKeyCode, int scanCode, int flags, int time, int extraInfo)
         {
-            
             VirtualKeyCode = virtualKeyCode;
             ScanCode = scanCode;
             Flags = flags;
             Time = time;
             ExtraInfo = extraInfo;
-
         }
-
     }
-
 }

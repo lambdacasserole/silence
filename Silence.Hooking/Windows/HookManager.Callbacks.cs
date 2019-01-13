@@ -2,10 +2,8 @@
 
 namespace Silence.Hooking.Windows
 {
-
     partial class HookManager
     {
-
         /// <summary>
         /// An application-defined or library-defined callback function used with the SetWindowsHookEx function. 
         /// </summary>
@@ -17,7 +15,5 @@ namespace Silence.Hooking.Windows
         /// http://msdn.microsoft.com/en-us/library/windows/desktop/ms644975(v=vs.85).aspx
         /// </remarks>
         private delegate int HookProc(int nCode, int wParam, IntPtr lParam);
-
     }
-
 }

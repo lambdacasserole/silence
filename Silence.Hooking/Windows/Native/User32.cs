@@ -5,13 +5,11 @@ using System.Windows.Interop;
 
 namespace Silence.Hooking.Windows.Native
 {
-
     /// <summary>
     /// Provides access to User32 library methods from managed code.
     /// </summary>
     public static class User32
     {
-
         /// <summary>
         /// Translates virtual-key messages into character messages. 
         /// </summary>
@@ -41,7 +39,5 @@ namespace Silence.Hooking.Windows.Native
         /// <remarks>http://msdn.microsoft.com/en-us/library/windows/desktop/ms644936(v=vs.85).aspx</remarks>
         [SecurityCritical, SuppressUnmanagedCodeSecurity, DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
         public static extern bool GetMessage(ref MSG lpMsg, Int32 hwnd, Int32 wMsgFilterMin, Int32 wMsgFilterMax);
-
     }
-
 }

@@ -6,7 +6,6 @@ namespace Silence.Hooking.Windows
 {
     public partial class HookManager
     {
-
         /// <summary>
         /// Installs a hook procedure that monitors low-level mouse input events.
         /// </summary>
@@ -300,7 +299,5 @@ namespace Silence.Hooking.Windows
         /// <remarks>http://msdn.microsoft.com/en-us/library/ms646301.aspx</remarks>
         [DllImport("user32.dll", CharSet = CharSet.Auto, CallingConvention = CallingConvention.StdCall)]
         private static extern short GetKeyState(int vKey);
-
     }
-
 }

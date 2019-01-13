@@ -8,10 +8,8 @@ using Silence.Hooking.Windows.Native;
 
 namespace Silence.Hooking.Windows
 {
-
     public partial class HookManager
     {
-        
         /// <summary>
         /// This field is not objectively needed but we need to keep a reference to a delegate which will be 
         /// passed to unmanaged code to prevent the GC from cleaning it up.
@@ -170,7 +168,5 @@ namespace Silence.Hooking.Windows
                 }
             }
         }
-
     }
-
 }
