@@ -4,11 +4,11 @@ namespace Silence.Hooking.Windows
 {
     /* This file contains documentation from MSDN governed according to the license agreement:
      * https://msdn.microsoft.com/en-us/cc300389.aspx
-     * 
+     *
      * Such documentation is reproduced here as a reasonable measure taken to document the API that this software uses
-     * in order to faciliate development, as permitted under the license agreement (Section 3). The full version of 
+     * in order to faciliate development, as permitted under the license agreement (Section 3). The full version of
      * such documentation is linked to in the remarks section of each relevant method's documentation block.
-     * 
+     *
      * Such documentation falls under the copyright notice:
      * © 2013 Microsoft Corporation. All rights reserved.
      */
@@ -16,7 +16,7 @@ namespace Silence.Hooking.Windows
     partial class HookManager
     {
         /// <summary>
-        /// An application-defined or library-defined callback function used with the SetWindowsHookEx function. 
+        /// An application-defined or library-defined callback function used with the SetWindowsHookEx function.
         /// </summary>
         /// <param name="nCode">Specifies whether the hook procedure must process the message.</param>
         /// <param name="wParam">Specifies whether the message was sent by the current thread.</param>

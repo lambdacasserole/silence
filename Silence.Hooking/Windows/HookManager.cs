@@ -5,7 +5,7 @@ namespace Silence.Hooking.Windows
     /// <summary>
     /// Provides events and methods for easily managing global input events regardless of application focus.
     /// </summary>
-    public partial class HookManager : IDisposable 
+    public partial class HookManager : IDisposable
     {
         /// <summary>
         /// Raised whenever the global mouse hook detects a mouse move action.
@@ -16,7 +16,7 @@ namespace Silence.Hooking.Windows
         /// Raised whenever the global mouse hook detects a mouse down action.
         /// </summary>
         private event GlobalMouseEventHandler GlobalMouseDown;
-        
+
         /// <summary>
         /// Raised whenever the global mouse hook detects a mouse up action.
         /// </summary>
@@ -31,12 +31,12 @@ namespace Silence.Hooking.Windows
         /// Raised whenever the global keyboard hook detects a key up action.
         /// </summary>
         private event GlobalKeyEventHandler GlobalKeyUp;
-        
+
         /// <summary>
         /// Raised whenever the global keyboard hook detects a key down action.
         /// </summary>
         private event GlobalKeyEventHandler GlobalKeyDown;
-        
+
         /// <summary>
         /// Raised whenever the global mouse hook detects a mouse move action.
         /// </summary>
@@ -138,7 +138,7 @@ namespace Silence.Hooking.Windows
                 TryUnsubscribeFromGlobalKeyboardEvents();
             }
         }
-        
+
         /// <summary>
         /// Unsubscribes from all hooks and releases all resources associated with this object.
         /// </summary>

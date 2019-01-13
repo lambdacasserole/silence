@@ -8,17 +8,17 @@ namespace Silence.Hooking.Windows
     {
         /* This file contains documentation from MSDN governed according to the license agreement:
          * https://msdn.microsoft.com/en-us/cc300389.aspx
-         * 
+         *
          * Such documentation is reproduced here as a reasonable measure taken to document the API that this software uses
-         * in order to faciliate development, as permitted under the license agreement (Section 3). The full version of 
+         * in order to faciliate development, as permitted under the license agreement (Section 3). The full version of
          * such documentation is linked to in the remarks section of each relevant method's documentation block.
-         * 
+         *
          * Such documentation falls under the copyright notice:
          * © 2013 Microsoft Corporation. All rights reserved.
          */
 
         /// <summary>
-        /// This field is not objectively needed but we need to keep a reference to a delegate which will be 
+        /// This field is not objectively needed but we need to keep a reference to a delegate which will be
         /// passed to unmanaged code to prevent the GC from cleaning it up.
         /// </summary>
         private HookProc _windowsKeyboardDelegate;
@@ -96,7 +96,7 @@ namespace Silence.Hooking.Windows
                     // Do cleanup.
                     ForceUnsunscribeFromGlobalKeyboardEvents();
 
-                    // Initializes and throws a new instance of the Win32Exception class with the specified error. 
+                    // Initializes and throws a new instance of the Win32Exception class with the specified error.
                     throw new Win32Exception(Marshal.GetLastWin32Error());
                 }
             }
@@ -124,17 +124,17 @@ namespace Silence.Hooking.Windows
             {
                 // Uninstall hook.
                 var result = UnhookWindowsHookEx(_windowsKeyboardHookHandle);
-                
+
                 // Reset invalid handle.
                 _windowsKeyboardHookHandle = 0;
-                
+
                 // Free up for GC.
                 _windowsKeyboardDelegate = null;
 
                 // If failed, an exception must be thrown.
                 if (result == 0)
                 {
-                    //Initializes and throws a new instance of the Win32Exception class with the specified error. 
+                    //Initializes and throws a new instance of the Win32Exception class with the specified error.
                     throw new Win32Exception(Marshal.GetLastWin32Error());
                 }
             }

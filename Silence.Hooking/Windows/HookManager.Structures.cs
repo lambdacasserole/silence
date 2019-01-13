@@ -9,11 +9,11 @@ namespace Silence.Hooking.Windows
     {
         /* This file contains documentation from MSDN governed according to the license agreement:
          * https://msdn.microsoft.com/en-us/cc300389.aspx
-         * 
+         *
          * Such documentation is reproduced here as a reasonable measure taken to document the API that this software uses
-         * in order to faciliate development, as permitted under the license agreement (Section 3). The full version of 
+         * in order to faciliate development, as permitted under the license agreement (Section 3). The full version of
          * such documentation is linked to in the remarks section of each relevant method's documentation block.
-         * 
+         *
          * Such documentation falls under the copyright notice:
          * © 2013 Microsoft Corporation. All rights reserved.
          */
@@ -37,7 +37,7 @@ namespace Silence.Hooking.Windows
         }
 
         /// <summary>
-        /// Contains information about a low-level mouse input event. 
+        /// Contains information about a low-level mouse input event.
         /// <remarks>https://msdn.microsoft.com/en-us/library/windows/desktop/ms644970(v=vs.85).aspx</remarks>
         /// </summary>
         [StructLayout(LayoutKind.Sequential)]
@@ -54,7 +54,7 @@ namespace Silence.Hooking.Windows
             public int mouseData;
 
             /// <summary>
-            /// The event-injected flag. 
+            /// The event-injected flag.
             /// </summary>
             public int flags;
 
@@ -87,7 +87,7 @@ namespace Silence.Hooking.Windows
             public int scanCode;
 
             /// <summary>
-            /// The extended-key flag, event-injected flag, context code, and transition-state flag. 
+            /// The extended-key flag, event-injected flag, context code, and transition-state flag.
             /// </summary>
             public int flags;
 
@@ -97,7 +97,7 @@ namespace Silence.Hooking.Windows
             public int time;
 
             /// <summary>
-            /// Additional information associated with the message. 
+            /// Additional information associated with the message.
             /// </summary>
             public int dwExtraInfo;
         }

@@ -7,11 +7,11 @@ namespace Silence.Hooking.Windows.Native
 {
     /* This file contains documentation from MSDN governed according to the license agreement:
      * https://msdn.microsoft.com/en-us/cc300389.aspx
-     * 
+     *
      * Such documentation is reproduced here as a reasonable measure taken to document the API that this software uses
-     * in order to faciliate development, as permitted under the license agreement (Section 3). The full version of 
+     * in order to faciliate development, as permitted under the license agreement (Section 3). The full version of
      * such documentation is linked to in the remarks section of each relevant method's documentation block.
-     * 
+     *
      * Such documentation falls under the copyright notice:
      * © 2013 Microsoft Corporation. All rights reserved.
      */
@@ -22,7 +22,7 @@ namespace Silence.Hooking.Windows.Native
     public static class User32
     {
         /// <summary>
-        /// Translates virtual-key messages into character messages. 
+        /// Translates virtual-key messages into character messages.
         /// </summary>
         /// <param name="msg">A pointer to an MSG structure that contains message information retrieved from the calling thread's message queue by using the GetMessage or PeekMessage function.</param>
         /// <returns>If the message is translated (that is, a character message is posted to the thread's message queue), the return value is nonzero.</returns>

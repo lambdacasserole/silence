@@ -10,11 +10,11 @@ namespace Silence.Hooking.Windows
     {
         /* This file contains documentation from MSDN governed according to the license agreement:
          * https://msdn.microsoft.com/en-us/cc300389.aspx
-         * 
+         *
          * Such documentation is reproduced here as a reasonable measure taken to document the API that this software uses
-         * in order to faciliate development, as permitted under the license agreement (Section 3). The full version of 
+         * in order to faciliate development, as permitted under the license agreement (Section 3). The full version of
          * such documentation is linked to in the remarks section of each relevant method's documentation block.
-         * 
+         *
          * Such documentation falls under the copyright notice:
          * © 2013 Microsoft Corporation. All rights reserved.
          */
@@ -40,7 +40,7 @@ namespace Silence.Hooking.Windows
         private const int WH_KEYBOARD = 2;
 
         /// <summary>
-        /// Posted to a window when the cursor moves. 
+        /// Posted to a window when the cursor moves.
         /// </summary>
         private const int WM_MOUSEMOVE = 0x200;
 
@@ -90,7 +90,7 @@ namespace Silence.Hooking.Windows
         private const int WM_MBUTTONDBLCLK = 0x209;
 
         /// <summary>
-        /// Posted when the user presses the mouse wheel. 
+        /// Posted when the user presses the mouse wheel.
         /// </summary>
         private const int WM_MOUSEWHEEL = 0x020A;
 
@@ -105,14 +105,14 @@ namespace Silence.Hooking.Windows
         private const int WM_KEYUP = 0x101;
 
         /// <summary>
-        /// Posted to the window with the keyboard focus when the user presses the F10 key (which activates the menu 
+        /// Posted to the window with the keyboard focus when the user presses the F10 key (which activates the menu
         /// bar) or holds down the ALT key and then presses another key.
         /// </summary>
         private const int WM_SYSKEYDOWN = 0x104;
 
         /// <summary>
         /// Posted to the window with the keyboard focus when the user releases a key that was pressed while the ALT key
-        /// was held down. 
+        /// was held down.
         /// </summary>
         private const int WM_SYSKEYUP = 0x105;
 
@@ -156,7 +156,7 @@ namespace Silence.Hooking.Windows
         private static extern int SetWindowsHookEx(int idHook, HookProc lpfn, IntPtr hMod, int dwThreadId);
 
         /// <summary>
-        /// Removes a hook procedure installed in a hook chain by the SetWindowsHookEx function. 
+        /// Removes a hook procedure installed in a hook chain by the SetWindowsHookEx function.
         /// </summary>
         /// <param name="idHook">Handle to the hook to be removed.</param>
         /// <returns>If the function succeeds, the return value is nonzero.</returns>
