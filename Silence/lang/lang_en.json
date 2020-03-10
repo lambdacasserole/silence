@@ -11,8 +11,8 @@
     "error_save_nomacro_message": "There is no macro currently recorded.",
     "error_save_nomacro_title": "Cannot Save Macro",
     "dialog_save_macro_title": "Save Macro",
-    "dialog_save_macro_filter":  "Silence Macro Files (*.hush)|*.hush|All Files (*.*)|*.*",
+    "dialog_save_macro_filter":  "Lua Files (*.lua)|*.lua|All Files (*.*)|*.*",
     "dialog_open_macro_title": "Open Macro",
-    "dialog_open_macro_filter":  "Silence Macro Files (*.hush)|*.hush|All Files (*.*)|*.*"
+    "dialog_open_macro_filter":  "Lua Files (*.lua)|*.lua|All Files (*.*)|*.*"
   }
 }

@@ -102,6 +102,7 @@ namespace Silence.Macro
         public void StopRecording()
         {
             IsRunning = false;
+            CurrentMacro.SaveTemp();
         }
 
         private void underlyingHook_KeyDown(object sender, Silence.Hooking.GlobalKeyEventHandlerArgs e)
