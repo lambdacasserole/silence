@@ -116,9 +116,14 @@ namespace Silence.Macro
         private void PlayMacro()
         {
             IsPlaying = true;
+            int currentRepetition = repetitions;
 
-            lua.DoFile(CurrentMacro.MacroFile);
-
+            while (currentRepetition > 0)
+            {
+                lua.DoFile(CurrentMacro.MacroFile);
+                currentRepetition--;
+            }
+                
             IsPlaying = false;
         }
 

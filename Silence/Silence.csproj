@@ -9,10 +9,11 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Silence</RootNamespace>
     <AssemblyName>Silence</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -175,6 +176,17 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\record.bmp" />
+    <None Include="Resources\Record2.png" />
+    <None Include="Resources\Clear2.png" />
+    <None Include="Resources\Loop2.png" />
+    <None Include="Resources\Open2.png" />
+    <None Include="Resources\Pause2.png" />
+    <None Include="Resources\Save2.png" />
+    <None Include="Resources\Stop2.png" />
+    <None Include="Resources\Play2.png" />
+    <None Include="Resources\Settings.png" />
+    <None Include="Resources\ScreenShot.png" />
     <Content Include="silence.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

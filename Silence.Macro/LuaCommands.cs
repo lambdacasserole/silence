@@ -7,6 +7,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Forms;
+using Emgu.CV.UI;
 
 namespace Silence.Macro
 {

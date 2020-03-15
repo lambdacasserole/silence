@@ -16,7 +16,7 @@ namespace Silence
     {
         private const string ConfigurationFilePath = "config.json";
 
-        private readonly MacroRecorder _recorder = new MacroRecorder();
+        private readonly MacroRecorder _recorder;
         private readonly MacroPlayer _player = new MacroPlayer();
 
         private readonly ConfigurationFile _config;
@@ -25,6 +25,8 @@ namespace Silence
         public FormMain()
         {
             InitializeComponent();
+
+            _recorder = new MacroRecorder(lblEvents);
 
             if (!File.Exists(ConfigurationFilePath))
                 new ConfigurationFile().Save(ConfigurationFilePath);
@@ -48,18 +50,21 @@ namespace Silence
                     return;
             }
 
+            lblStatus.Text = "Status: Recording";
             // Begin recording.
             _recorder.StartRecording();
         }
 
         private void stopControlButton_Click(object sender, EventArgs e)
         {
+            lblStatus.Text = "Status: Idle";
             // Stop recording.
             _recorder.StopRecording();
         }
 
         private void playControlButton_Click(object sender, EventArgs e)
         {
+            lblStatus.Text = "Status: Playing";
             // Load and play macro.
             _player.LoadMacro(_recorder.CurrentMacro);
             _player.PlayMacroAsync();
@@ -136,14 +141,6 @@ namespace Silence
 
         private void FormMain_Load(object sender, EventArgs e)
         {
-            // Load theme color for buttons.
-            foreach (var control in panel1.Controls)
-            {
-                var button = (ControlButton)control;
-                button.MouseOutBackgroundColor = _config.ThemeColor.ToColor();
-                button.MouseOverBackgroundColor = _config.ThemeColor.ToColor(32);
-                button.MouseDownBackgroundColor = _config.ThemeColor.ToColor(-32);
-            }
         }
     }
 }
