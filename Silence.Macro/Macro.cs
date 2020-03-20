@@ -116,6 +116,11 @@ namespace Silence.Macro
                     MacroMouseWheelEvent castEvent = (MacroMouseWheelEvent)current;
                     str.AppendLine(string.Format("  LC:MouseWheel({0}, {1}, {2})", castEvent.Location.X, castEvent.Location.Y, castEvent.Delta));
                 }
+                else if (current is MacroWaitImageEvent)
+                {
+                    MacroWaitImageEvent castEvent = (MacroWaitImageEvent)current;
+                    str.AppendLine(string.Format("  LC:WaitAndClick(\"{0}\", {1}, {2})", castEvent.FileLocation, castEvent.Score, castEvent.WaitMs));
+                }
             }
 
             str.AppendLine("end");

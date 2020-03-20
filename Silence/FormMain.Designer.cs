@@ -30,10 +30,10 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormMain));
             this.panel1 = new System.Windows.Forms.Panel();
+            this.btnScreenshot = new System.Windows.Forms.Button();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.lblEvents = new System.Windows.Forms.ToolStripStatusLabel();
             this.lblStatus = new System.Windows.Forms.ToolStripStatusLabel();
-            this.btnLoad = new System.Windows.Forms.Button();
             this.btnLoop = new System.Windows.Forms.Button();
             this.btnSettings = new System.Windows.Forms.Button();
             this.btnSave = new System.Windows.Forms.Button();
@@ -41,7 +41,7 @@
             this.btnPause = new System.Windows.Forms.Button();
             this.btnPlay = new System.Windows.Forms.Button();
             this.btnRecord = new System.Windows.Forms.Button();
-            this.btnScreenshot = new System.Windows.Forms.Button();
+            this.btnLoad = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -62,6 +62,15 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(697, 99);
             this.panel1.TabIndex = 2;
+            // 
+            // btnScreenshot
+            // 
+            this.btnScreenshot.Image = global::Silence.Properties.Resources.ScreenShot;
+            this.btnScreenshot.Location = new System.Drawing.Point(619, 3);
+            this.btnScreenshot.Name = "btnScreenshot";
+            this.btnScreenshot.Size = new System.Drawing.Size(75, 72);
+            this.btnScreenshot.TabIndex = 8;
+            this.btnScreenshot.UseVisualStyleBackColor = true;
             // 
             // statusStrip1
             // 
@@ -86,16 +95,6 @@
             this.lblStatus.Size = new System.Drawing.Size(64, 17);
             this.lblStatus.Text = "Status: Idle";
             // 
-            // btnLoad
-            // 
-            this.btnLoad.Image = global::Silence.Properties.Resources.Open2;
-            this.btnLoad.Location = new System.Drawing.Point(388, 3);
-            this.btnLoad.Name = "btnLoad";
-            this.btnLoad.Size = new System.Drawing.Size(75, 72);
-            this.btnLoad.TabIndex = 3;
-            this.btnLoad.UseVisualStyleBackColor = true;
-            this.btnLoad.Click += new System.EventHandler(this.openControlButton_Click);
-            // 
             // btnLoop
             // 
             this.btnLoop.Image = global::Silence.Properties.Resources.Loop2;
@@ -114,6 +113,7 @@
             this.btnSettings.Size = new System.Drawing.Size(75, 72);
             this.btnSettings.TabIndex = 5;
             this.btnSettings.UseVisualStyleBackColor = true;
+            this.btnSettings.Click += new System.EventHandler(this.btnSettings_Click);
             // 
             // btnSave
             // 
@@ -164,14 +164,15 @@
             this.btnRecord.UseVisualStyleBackColor = true;
             this.btnRecord.Click += new System.EventHandler(this.recordControlButton_Click);
             // 
-            // btnScreenshot
+            // btnLoad
             // 
-            this.btnScreenshot.Image = global::Silence.Properties.Resources.ScreenShot;
-            this.btnScreenshot.Location = new System.Drawing.Point(619, 3);
-            this.btnScreenshot.Name = "btnScreenshot";
-            this.btnScreenshot.Size = new System.Drawing.Size(75, 72);
-            this.btnScreenshot.TabIndex = 8;
-            this.btnScreenshot.UseVisualStyleBackColor = true;
+            this.btnLoad.Image = global::Silence.Properties.Resources.Open2;
+            this.btnLoad.Location = new System.Drawing.Point(388, 3);
+            this.btnLoad.Name = "btnLoad";
+            this.btnLoad.Size = new System.Drawing.Size(75, 72);
+            this.btnLoad.TabIndex = 3;
+            this.btnLoad.UseVisualStyleBackColor = true;
+            this.btnLoad.Click += new System.EventHandler(this.openControlButton_Click);
             // 
             // FormMain
             // 

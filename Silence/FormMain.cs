@@ -27,6 +27,7 @@ namespace Silence
             InitializeComponent();
 
             _recorder = new MacroRecorder(lblEvents);
+            _recorder.ShortcutHandler = KeyDownGlobal;
 
             if (!File.Exists(ConfigurationFilePath))
                 new ConfigurationFile().Save(ConfigurationFilePath);
@@ -36,7 +37,55 @@ namespace Silence
             _languages.SelectLanguage(_config.LanguageCode);
         }
 
-        private void recordControlButton_Click(object sender, EventArgs e)
+        public bool KeyDownGlobal(Hooking.GlobalKeyEventHandlerArgs e)
+        {
+            if (e.VirtualKeyCode == _config.RecordShortcut)
+            {
+                if (_recorder.IsRunning)
+                    stopMacro();
+                else
+                {
+                    lblStatus.Text = "Status: Recording";
+                    _recorder.Clear();
+                    _recorder.StartRecording();
+                }
+                return false;
+            }
+            if (e.VirtualKeyCode == _config.PlayShortcut)
+            {
+               if (_player.IsPlaying)
+                    _player.CancelPlayback();
+                else
+                    playMacro();
+                return false;
+            }
+            if (e.VirtualKeyCode == _config.CaptureShortcut && _recorder.IsRunning)
+            {
+                string basePath = System.IO.Path.GetDirectoryName(Application.ExecutablePath) + "\\" +_config.FilePrefix;
+
+                if (!System.IO.Directory.Exists(basePath))
+                    Directory.CreateDirectory(basePath);
+
+                Guid guid = Guid.NewGuid();
+                string tempPath = basePath + "\\" + _config.FilePrefix + guid + ".bmp";
+
+                int offsetPointx = int.Parse(_config.Offset.Split(',')[0]) * _config.CaptureWidth / 100;
+                int offsetPointy = int.Parse(_config.Offset.Split(',')[1]) * _config.CaptureHeight / 100;
+
+                //System.Drawing.Point destinationPoint = new System.Drawing.Point((int)_recorder.CurrentXY.X + _config.CaptureWidth, (int)_recorder.CurrentXY.Y + _config.CaptureHeight);
+                System.Drawing.Point destinationPoint = new System.Drawing.Point((int)_recorder.CurrentXY.X + offsetPointx, (int)_recorder.CurrentXY.Y + offsetPointy);
+                //System.Drawing.Point sourcePoint = new Point((int)_recorder.CurrentXY.X, (int)_recorder.CurrentXY.Y);
+                System.Drawing.Point sourcePoint = new Point((int)_recorder.CurrentXY.X - offsetPointx, (int)_recorder.CurrentXY.Y - offsetPointy);
+                ImageProcessing.CaptureImage(sourcePoint, destinationPoint, tempPath, "bmp");
+
+                _recorder.CurrentMacro.AddEvent(new MacroWaitImageEvent(tempPath.Replace("\\", "\\\\")));
+                return false;
+            }
+
+            return true;
+        }
+
+        private void recordMacro()
         {
             // Confirm action.
             if (_recorder.CurrentMacro != null && _recorder.CurrentMacro.Events.Length > 0)
@@ -55,19 +104,34 @@ namespace Silence
             _recorder.StartRecording();
         }
 
-        private void stopControlButton_Click(object sender, EventArgs e)
+        private void playMacro()
+        {
+            lblStatus.Text = "Status: Playing";
+            // Load and play macro.
+            _player.LoadMacro(_recorder.CurrentMacro);
+            _player.PlayMacroAsync();
+        }
+
+        private void stopMacro()
         {
             lblStatus.Text = "Status: Idle";
             // Stop recording.
             _recorder.StopRecording();
         }
 
+        private void recordControlButton_Click(object sender, EventArgs e)
+        {
+            recordMacro();
+        }
+
+        private void stopControlButton_Click(object sender, EventArgs e)
+        {
+            stopMacro();
+        }
+
         private void playControlButton_Click(object sender, EventArgs e)
         {
-            lblStatus.Text = "Status: Playing";
-            // Load and play macro.
-            _player.LoadMacro(_recorder.CurrentMacro);
-            _player.PlayMacroAsync();
+            playMacro();
         }
 
         private void clearControlButton_Click(object sender, EventArgs e)
@@ -141,6 +205,34 @@ namespace Silence
 
         private void FormMain_Load(object sender, EventArgs e)
         {
+        }
+
+        private void btnSettings_Click(object sender, EventArgs e)
+        {
+            // Set number of repetitions on player.
+            var dialog = new FormSettings(_recorder, _config, ConfigurationFilePath);
+
+            dialog.txtCapture.Text = _config.CaptureShortcut.ToString();
+            dialog.txtPlay.Text = _config.PlayShortcut.ToString();
+            dialog.txtRecord.Text = _config.RecordShortcut.ToString();
+            dialog.txtCaptureWidth.Text = _config.CaptureWidth.ToString();
+            dialog.txtCaptureHeight.Text = _config.CaptureHeight.ToString();
+            dialog.txtFilePrefix.Text = _config.FilePrefix;
+            dialog.chkAppendRecordings.Checked = _config.AppendScript;
+
+            dialog.FormClosing += Dialog_FormClosing;
+
+            if (dialog.ShowDialog() == DialogResult.OK)
+            {
+                
+            }
+
+           
+        }
+
+        private void Dialog_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            _recorder.ShortcutHandler = KeyDownGlobal;
         }
     }
 }

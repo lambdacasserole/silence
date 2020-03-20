@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Windows;
 using System.Windows.Forms;
 
 namespace Silence.Macro
@@ -43,6 +44,21 @@ namespace Silence.Macro
         /// Gets whether or not the macro recorder is currently running.
         /// </summary>
         public bool IsRunning { get; private set; }
+
+        /// <summary>
+        /// Shortcuts delegate
+        /// </summary>
+        public delegate bool Shortcuts(Hooking.GlobalKeyEventHandlerArgs e);
+
+        /// <summary>
+        /// Shortcut handler
+        /// </summary>
+        public Shortcuts ShortcutHandler;
+
+        /// <summary>
+        /// Mouse coordinates
+        /// </summary>
+        public Point CurrentXY;
 
         /// <summary>
         /// Initialises a new instance of a macro recorder.
@@ -130,7 +146,6 @@ namespace Silence.Macro
 
         private void underlyingHook_KeyDown(object sender, Silence.Hooking.GlobalKeyEventHandlerArgs e)
         {
-            
             if (IsRunning)
             {
                 AddDelayEvent();
@@ -140,10 +155,14 @@ namespace Silence.Macro
 
         private void underlyingHook_KeyUp(object sender, Silence.Hooking.GlobalKeyEventHandlerArgs e)
         {
-            if (IsRunning)
+            bool? result = ShortcutHandler?.Invoke(e);
+            if (result == null || result == true)
             {
-                AddDelayEvent();
-                CurrentMacro.AddEvent(new MacroKeyUpEvent(e.VirtualKeyCode));
+                if (IsRunning)
+                {
+                    AddDelayEvent();
+                    CurrentMacro.AddEvent(new MacroKeyUpEvent(e.VirtualKeyCode));
+                }
             }
         }
 
@@ -167,6 +186,7 @@ namespace Silence.Macro
 
         private void underlyingHook_MouseMove(object sender, Silence.Hooking.GlobalMouseEventHandlerArgs e)
         {
+            CurrentXY = e.Point;
             if (IsRunning)
             {
                 AddDelayEvent();

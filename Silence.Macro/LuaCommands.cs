@@ -8,6 +8,8 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Forms;
 using Emgu.CV.UI;
+using System.Drawing;
+using Point = System.Windows.Point;
 
 namespace Silence.Macro
 {
@@ -128,6 +130,35 @@ namespace Silence.Macro
         public void KeyUp(int key)
         {
             underlyingKeyboardSimulator.KeyUp((Simulation.Native.VirtualKeyCode)key);
+        }
+
+        /// <summary>
+        /// Wait and click on the screen
+        /// </summary>
+        /// <param name="image"></param>
+        /// <param name="score"></param>
+        /// <param name="waitms"></param>
+        public void WaitAndClick(string image, int score, int waitms)
+        {
+            Image bmp = Image.FromFile(image);
+            System.Diagnostics.Stopwatch sw = new System.Diagnostics.Stopwatch();
+            sw.Start();
+
+            while (sw.ElapsedMilliseconds < waitms)
+            {
+                System.Windows.Point? imgScore = ImageProcessing.FindImageOnScreen((Bitmap)bmp, score);
+                if (imgScore != null && imgScore.Value.X > 0 && imgScore.Value.Y > 0)
+                {
+                    double posX = imgScore.Value.X + (bmp.Width / 2);
+                    double posY = imgScore.Value.Y + (bmp.Height / 2);
+
+                    MouseDown(posX, posY, 0);
+                    System.Threading.Thread.Sleep(5);
+                    MouseUp(posX, posY, 0);
+
+                    return;
+                }
+            }
         }
     }
 

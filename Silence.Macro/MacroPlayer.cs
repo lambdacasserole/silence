@@ -88,6 +88,8 @@ namespace Silence.Macro
         public void CancelPlayback()
         {
             cancelled = IsPlaying;
+            macroThread.Abort();
+            IsPlaying = false;
         }
 
         /// <summary>
@@ -115,9 +117,11 @@ namespace Silence.Macro
         /// </summary>
         private void PlayMacro()
         {
+            if (CurrentMacro == null || CurrentMacro.MacroFile == null)
+                return;
+
             IsPlaying = true;
             int currentRepetition = repetitions;
-
             while (currentRepetition > 0)
             {
                 lua.DoFile(CurrentMacro.MacroFile);
