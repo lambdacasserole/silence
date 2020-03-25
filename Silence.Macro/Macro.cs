@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Xml;
+using System.Windows.Forms;
 
 namespace Silence.Macro
 {
@@ -12,6 +12,11 @@ namespace Silence.Macro
     /// </summary>
     public class Macro
     {
+
+        /// <summary>
+        /// Macro file path
+        /// </summary>
+        public string MacroFile;
 
         /// <summary>
         /// Holds the list of events that comprise this macro.
@@ -54,32 +59,85 @@ namespace Silence.Macro
         }
 
         /// <summary>
-        /// Serialises this object to an XML string for saving.
-        /// </summary>
-        /// <returns></returns>
-        public string ToXml()
-        {
-            StringBuilder str = new StringBuilder();
-            str.AppendLine("<SilenceMacro>");
-            foreach (MacroEvent current in events)
-            {
-                str.AppendLine(current.ToXml());
-            }
-            str.AppendLine("</SilenceMacro>");
-
-            return str.ToString();
-        }
-
-        /// <summary>
         /// Saves this macro to a file at the specified path.
         /// </summary>
         /// <param name="path">The path to save to.</param>
         public void Save(string path)
         {
-            XmlDocument xmlDoc = new XmlDocument();
-            xmlDoc.LoadXml(ToXml());
+            StringBuilder str = new StringBuilder();
+            str.AppendLine("luanet.load_assembly('mscorlib')");
+            str.AppendLine("luanet.load_assembly('Silence.Macro', 'Silence.Macro')");
+            str.AppendLine("LuaCommands=luanet.import_type('Silence.Macro.LuaCommands')");
+            str.AppendLine("LC=LuaCommands()");
+            str.AppendLine("");
+            str.AppendLine("function inputRecords()");
 
-            xmlDoc.Save(path);
+            foreach (MacroEvent current in events)
+            {
+                if (current is MacroDelayEvent)
+                {
+                    // Delay event.
+                    MacroDelayEvent castEvent = (MacroDelayEvent)current;
+                    str.AppendLine(string.Format("  LC:Delay({0})", castEvent.Delay.ToString()));
+                }
+                else if (current is MacroMouseMoveEvent)
+                {
+                    // Mouse move event.
+                    MacroMouseMoveEvent castEvent = (MacroMouseMoveEvent)current;
+                    str.AppendLine(string.Format("  LC:MouseMove({0}, {1})", castEvent.Location.X, castEvent.Location.Y));
+                }
+                else if (current is MacroMouseDownEvent)
+                {
+                    // Mouse down event.
+                    MacroMouseDownEvent castEvent = (MacroMouseDownEvent)current;
+                    str.AppendLine(string.Format("  LC:MouseDown({0}, {1}, {2})", castEvent.Location.X, castEvent.Location.Y, (int)castEvent.Button));
+                }
+                else if (current is MacroMouseUpEvent)
+                {
+                    // Mouse up event.
+                    MacroMouseUpEvent castEvent = (MacroMouseUpEvent)current;
+                    str.AppendLine(string.Format("  LC:MouseUp({0}, {1}, {2})", castEvent.Location.X, castEvent.Location.Y, (int)castEvent.Button));
+                }
+                else if (current is MacroKeyDownEvent)
+                {
+                    // Key down event.
+                    MacroKeyDownEvent castEvent = (MacroKeyDownEvent)current;
+                    str.AppendLine(string.Format("  LC:KeyDown({0})", castEvent.VirtualKeyCode));
+                }
+                else if (current is MacroKeyUpEvent)
+                {
+                    // Key up event.
+                    MacroKeyUpEvent castEvent = (MacroKeyUpEvent)current;
+                    str.AppendLine(string.Format("  LC:KeyUp({0})", castEvent.VirtualKeyCode));
+                }
+                else if (current is MacroMouseWheelEvent)
+                {
+                    // Mouse wheel event.
+                    MacroMouseWheelEvent castEvent = (MacroMouseWheelEvent)current;
+                    str.AppendLine(string.Format("  LC:MouseWheel({0}, {1}, {2})", castEvent.Location.X, castEvent.Location.Y, castEvent.Delta));
+                }
+                else if (current is MacroWaitImageEvent)
+                {
+                    MacroWaitImageEvent castEvent = (MacroWaitImageEvent)current;
+                    str.AppendLine(string.Format("  LC:WaitAndClick(\"{0}\", {1}, {2})", castEvent.FileLocation, castEvent.Score, castEvent.WaitMs));
+                }
+            }
+
+            str.AppendLine("end");
+            str.AppendLine("inputRecords()");
+
+            using (System.IO.StreamWriter file = new System.IO.StreamWriter(@path))
+            {
+                file.Write(str);
+            }
+
+            MacroFile = path;
+        }
+
+        public void SaveTemp()
+        {
+            string tempPath = System.IO.Path.GetDirectoryName(Application.ExecutablePath) + "\\temp.lua";
+            Save(tempPath);
         }
 
         /// <summary>
@@ -89,37 +147,7 @@ namespace Silence.Macro
         public void Load(string path)
         {
             ClearEvents();
-
-            XmlDocument xmlDoc = new XmlDocument();
-            xmlDoc.Load(path);
-
-            foreach (XmlElement current in xmlDoc.DocumentElement)
-            {
-                switch (current.Name)
-                {
-                    case "MacroKeyDownEvent" :
-                        AddEvent(new MacroKeyDownEvent(current));
-                        break;
-                    case "MacroKeyUpEvent":
-                        AddEvent(new MacroKeyUpEvent(current));
-                        break;
-                    case "MacroMouseDownEvent":
-                        AddEvent(new MacroMouseDownEvent(current));
-                        break;
-                    case "MacroMouseUpEvent":
-                        AddEvent(new MacroMouseUpEvent(current));
-                        break;
-                    case "MacroMouseMoveEvent":
-                        AddEvent(new MacroMouseMoveEvent(current));
-                        break;
-                    case "MacroMouseWheelEvent":
-                        AddEvent(new MacroMouseWheelEvent(current));
-                        break;
-                    case "MacroDelayEvent":
-                        AddEvent(new MacroDelayEvent(current));
-                        break;
-                }
-            }
+            MacroFile = path;
         }
 
     }

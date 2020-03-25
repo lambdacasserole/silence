@@ -5,7 +5,7 @@ namespace Silence
 	/// <summary>
 	/// Represents a base theme color for the application.
 	/// </summary>
-	internal class ThemeColor
+	public class ThemeColor
 	{
 		/// <summary>
 		/// The color's red component.

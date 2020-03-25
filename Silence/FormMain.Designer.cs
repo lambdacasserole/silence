@@ -30,148 +30,156 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormMain));
             this.panel1 = new System.Windows.Forms.Panel();
-            this.saveControlButton = new Silence.ControlButton();
-            this.openControlButton = new Silence.ControlButton();
-            this.clearControlButton = new Silence.ControlButton();
-            this.loopControlButton = new Silence.ControlButton();
-            this.playControlButton = new Silence.ControlButton();
-            this.stopControlButton = new Silence.ControlButton();
-            this.recordControlButton = new Silence.ControlButton();
+            this.btnScreenshot = new System.Windows.Forms.Button();
+            this.statusStrip1 = new System.Windows.Forms.StatusStrip();
+            this.lblEvents = new System.Windows.Forms.ToolStripStatusLabel();
+            this.lblStatus = new System.Windows.Forms.ToolStripStatusLabel();
+            this.btnLoop = new System.Windows.Forms.Button();
+            this.btnSettings = new System.Windows.Forms.Button();
+            this.btnSave = new System.Windows.Forms.Button();
+            this.btnStop = new System.Windows.Forms.Button();
+            this.btnPause = new System.Windows.Forms.Button();
+            this.btnPlay = new System.Windows.Forms.Button();
+            this.btnRecord = new System.Windows.Forms.Button();
+            this.btnLoad = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.saveControlButton)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.openControlButton)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.clearControlButton)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.loopControlButton)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.playControlButton)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.stopControlButton)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.recordControlButton)).BeginInit();
+            this.statusStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // panel1
             // 
-            this.panel1.Controls.Add(this.saveControlButton);
-            this.panel1.Controls.Add(this.openControlButton);
-            this.panel1.Controls.Add(this.clearControlButton);
-            this.panel1.Controls.Add(this.loopControlButton);
-            this.panel1.Controls.Add(this.playControlButton);
-            this.panel1.Controls.Add(this.stopControlButton);
-            this.panel1.Controls.Add(this.recordControlButton);
+            this.panel1.Controls.Add(this.btnScreenshot);
+            this.panel1.Controls.Add(this.statusStrip1);
+            this.panel1.Controls.Add(this.btnLoop);
+            this.panel1.Controls.Add(this.btnSettings);
+            this.panel1.Controls.Add(this.btnSave);
+            this.panel1.Controls.Add(this.btnStop);
+            this.panel1.Controls.Add(this.btnPause);
+            this.panel1.Controls.Add(this.btnPlay);
+            this.panel1.Controls.Add(this.btnRecord);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(448, 64);
+            this.panel1.Size = new System.Drawing.Size(697, 99);
             this.panel1.TabIndex = 2;
             // 
-            // saveControlButton
+            // btnScreenshot
             // 
-            this.saveControlButton.Image = ((System.Drawing.Image)(resources.GetObject("saveControlButton.Image")));
-            this.saveControlButton.Location = new System.Drawing.Point(384, 0);
-            this.saveControlButton.MouseDownBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(44)))), ((int)(((byte)(23)))), ((int)(((byte)(61)))));
-            this.saveControlButton.MouseOutBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(0)))), ((int)(((byte)(64)))));
-            this.saveControlButton.MouseOverBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(65)))), ((int)(((byte)(33)))), ((int)(((byte)(89)))));
-            this.saveControlButton.Name = "saveControlButton";
-            this.saveControlButton.ShapeColor = System.Drawing.Color.White;
-            this.saveControlButton.ShapeImage = global::Silence.Properties.Resources.save;
-            this.saveControlButton.Size = new System.Drawing.Size(64, 64);
-            this.saveControlButton.TabIndex = 7;
-            this.saveControlButton.TabStop = false;
-            this.saveControlButton.Click += new System.EventHandler(this.saveControlButton_Click);
+            this.btnScreenshot.Image = global::Silence.Properties.Resources.ScreenShot;
+            this.btnScreenshot.Location = new System.Drawing.Point(619, 3);
+            this.btnScreenshot.Name = "btnScreenshot";
+            this.btnScreenshot.Size = new System.Drawing.Size(75, 72);
+            this.btnScreenshot.TabIndex = 8;
+            this.btnScreenshot.UseVisualStyleBackColor = true;
             // 
-            // openControlButton
+            // statusStrip1
             // 
-            this.openControlButton.Image = ((System.Drawing.Image)(resources.GetObject("openControlButton.Image")));
-            this.openControlButton.Location = new System.Drawing.Point(320, 0);
-            this.openControlButton.MouseDownBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(44)))), ((int)(((byte)(23)))), ((int)(((byte)(61)))));
-            this.openControlButton.MouseOutBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(0)))), ((int)(((byte)(64)))));
-            this.openControlButton.MouseOverBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(65)))), ((int)(((byte)(33)))), ((int)(((byte)(89)))));
-            this.openControlButton.Name = "openControlButton";
-            this.openControlButton.ShapeColor = System.Drawing.Color.White;
-            this.openControlButton.ShapeImage = global::Silence.Properties.Resources.open;
-            this.openControlButton.Size = new System.Drawing.Size(64, 64);
-            this.openControlButton.TabIndex = 6;
-            this.openControlButton.TabStop = false;
-            this.openControlButton.Click += new System.EventHandler(this.openControlButton_Click);
+            this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.lblEvents,
+            this.lblStatus});
+            this.statusStrip1.Location = new System.Drawing.Point(0, 77);
+            this.statusStrip1.Name = "statusStrip1";
+            this.statusStrip1.Size = new System.Drawing.Size(697, 22);
+            this.statusStrip1.TabIndex = 7;
+            this.statusStrip1.Text = "statusBar";
             // 
-            // clearControlButton
+            // lblEvents
             // 
-            this.clearControlButton.Image = ((System.Drawing.Image)(resources.GetObject("clearControlButton.Image")));
-            this.clearControlButton.Location = new System.Drawing.Point(256, 0);
-            this.clearControlButton.MouseDownBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(44)))), ((int)(((byte)(23)))), ((int)(((byte)(61)))));
-            this.clearControlButton.MouseOutBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(0)))), ((int)(((byte)(64)))));
-            this.clearControlButton.MouseOverBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(65)))), ((int)(((byte)(33)))), ((int)(((byte)(89)))));
-            this.clearControlButton.Name = "clearControlButton";
-            this.clearControlButton.ShapeColor = System.Drawing.Color.White;
-            this.clearControlButton.ShapeImage = global::Silence.Properties.Resources.clear;
-            this.clearControlButton.Size = new System.Drawing.Size(64, 64);
-            this.clearControlButton.TabIndex = 5;
-            this.clearControlButton.TabStop = false;
-            this.clearControlButton.Click += new System.EventHandler(this.clearControlButton_Click);
+            this.lblEvents.Name = "lblEvents";
+            this.lblEvents.Size = new System.Drawing.Size(53, 17);
+            this.lblEvents.Text = "Events: 0";
             // 
-            // loopControlButton
+            // lblStatus
             // 
-            this.loopControlButton.Image = ((System.Drawing.Image)(resources.GetObject("loopControlButton.Image")));
-            this.loopControlButton.Location = new System.Drawing.Point(192, 0);
-            this.loopControlButton.MouseDownBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(44)))), ((int)(((byte)(23)))), ((int)(((byte)(61)))));
-            this.loopControlButton.MouseOutBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(0)))), ((int)(((byte)(64)))));
-            this.loopControlButton.MouseOverBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(65)))), ((int)(((byte)(33)))), ((int)(((byte)(89)))));
-            this.loopControlButton.Name = "loopControlButton";
-            this.loopControlButton.ShapeColor = System.Drawing.Color.White;
-            this.loopControlButton.ShapeImage = global::Silence.Properties.Resources.loop;
-            this.loopControlButton.Size = new System.Drawing.Size(64, 64);
-            this.loopControlButton.TabIndex = 4;
-            this.loopControlButton.TabStop = false;
-            this.loopControlButton.Click += new System.EventHandler(this.loopControlButton_Click);
+            this.lblStatus.Name = "lblStatus";
+            this.lblStatus.Size = new System.Drawing.Size(64, 17);
+            this.lblStatus.Text = "Status: Idle";
             // 
-            // playControlButton
+            // btnLoop
             // 
-            this.playControlButton.Image = ((System.Drawing.Image)(resources.GetObject("playControlButton.Image")));
-            this.playControlButton.Location = new System.Drawing.Point(128, 0);
-            this.playControlButton.MouseDownBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(44)))), ((int)(((byte)(23)))), ((int)(((byte)(61)))));
-            this.playControlButton.MouseOutBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(0)))), ((int)(((byte)(64)))));
-            this.playControlButton.MouseOverBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(65)))), ((int)(((byte)(33)))), ((int)(((byte)(89)))));
-            this.playControlButton.Name = "playControlButton";
-            this.playControlButton.ShapeColor = System.Drawing.Color.White;
-            this.playControlButton.ShapeImage = global::Silence.Properties.Resources.play;
-            this.playControlButton.Size = new System.Drawing.Size(64, 64);
-            this.playControlButton.TabIndex = 3;
-            this.playControlButton.TabStop = false;
-            this.playControlButton.Click += new System.EventHandler(this.playControlButton_Click);
+            this.btnLoop.Image = global::Silence.Properties.Resources.Loop2;
+            this.btnLoop.Location = new System.Drawing.Point(542, 3);
+            this.btnLoop.Name = "btnLoop";
+            this.btnLoop.Size = new System.Drawing.Size(75, 72);
+            this.btnLoop.TabIndex = 6;
+            this.btnLoop.UseVisualStyleBackColor = true;
+            this.btnLoop.Click += new System.EventHandler(this.loopControlButton_Click);
             // 
-            // stopControlButton
+            // btnSettings
             // 
-            this.stopControlButton.Image = ((System.Drawing.Image)(resources.GetObject("stopControlButton.Image")));
-            this.stopControlButton.Location = new System.Drawing.Point(64, 0);
-            this.stopControlButton.MouseDownBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(44)))), ((int)(((byte)(23)))), ((int)(((byte)(61)))));
-            this.stopControlButton.MouseOutBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(0)))), ((int)(((byte)(64)))));
-            this.stopControlButton.MouseOverBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(65)))), ((int)(((byte)(33)))), ((int)(((byte)(89)))));
-            this.stopControlButton.Name = "stopControlButton";
-            this.stopControlButton.ShapeColor = System.Drawing.Color.White;
-            this.stopControlButton.ShapeImage = global::Silence.Properties.Resources.stop;
-            this.stopControlButton.Size = new System.Drawing.Size(64, 64);
-            this.stopControlButton.TabIndex = 2;
-            this.stopControlButton.TabStop = false;
-            this.stopControlButton.Click += new System.EventHandler(this.stopControlButton_Click);
+            this.btnSettings.Image = global::Silence.Properties.Resources.Settings;
+            this.btnSettings.Location = new System.Drawing.Point(465, 3);
+            this.btnSettings.Name = "btnSettings";
+            this.btnSettings.Size = new System.Drawing.Size(75, 72);
+            this.btnSettings.TabIndex = 5;
+            this.btnSettings.UseVisualStyleBackColor = true;
+            this.btnSettings.Click += new System.EventHandler(this.btnSettings_Click);
             // 
-            // recordControlButton
+            // btnSave
             // 
-            this.recordControlButton.Image = ((System.Drawing.Image)(resources.GetObject("recordControlButton.Image")));
-            this.recordControlButton.Location = new System.Drawing.Point(0, 0);
-            this.recordControlButton.MouseDownBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(44)))), ((int)(((byte)(23)))), ((int)(((byte)(61)))));
-            this.recordControlButton.MouseOutBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(0)))), ((int)(((byte)(64)))));
-            this.recordControlButton.MouseOverBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(65)))), ((int)(((byte)(33)))), ((int)(((byte)(89)))));
-            this.recordControlButton.Name = "recordControlButton";
-            this.recordControlButton.ShapeColor = System.Drawing.Color.White;
-            this.recordControlButton.ShapeImage = global::Silence.Properties.Resources.record;
-            this.recordControlButton.Size = new System.Drawing.Size(64, 64);
-            this.recordControlButton.TabIndex = 1;
-            this.recordControlButton.TabStop = false;
-            this.recordControlButton.Click += new System.EventHandler(this.recordControlButton_Click);
+            this.btnSave.Image = global::Silence.Properties.Resources.Save2;
+            this.btnSave.Location = new System.Drawing.Point(311, 3);
+            this.btnSave.Name = "btnSave";
+            this.btnSave.Size = new System.Drawing.Size(75, 72);
+            this.btnSave.TabIndex = 4;
+            this.btnSave.UseVisualStyleBackColor = true;
+            this.btnSave.Click += new System.EventHandler(this.saveControlButton_Click);
+            // 
+            // btnStop
+            // 
+            this.btnStop.Image = global::Silence.Properties.Resources.Stop2;
+            this.btnStop.Location = new System.Drawing.Point(234, 3);
+            this.btnStop.Name = "btnStop";
+            this.btnStop.Size = new System.Drawing.Size(75, 72);
+            this.btnStop.TabIndex = 3;
+            this.btnStop.UseVisualStyleBackColor = true;
+            this.btnStop.Click += new System.EventHandler(this.stopControlButton_Click);
+            // 
+            // btnPause
+            // 
+            this.btnPause.Image = global::Silence.Properties.Resources.Pause2;
+            this.btnPause.Location = new System.Drawing.Point(157, 3);
+            this.btnPause.Name = "btnPause";
+            this.btnPause.Size = new System.Drawing.Size(75, 72);
+            this.btnPause.TabIndex = 2;
+            this.btnPause.UseVisualStyleBackColor = true;
+            // 
+            // btnPlay
+            // 
+            this.btnPlay.Image = global::Silence.Properties.Resources.Play2;
+            this.btnPlay.Location = new System.Drawing.Point(80, 3);
+            this.btnPlay.Name = "btnPlay";
+            this.btnPlay.Size = new System.Drawing.Size(75, 72);
+            this.btnPlay.TabIndex = 1;
+            this.btnPlay.UseVisualStyleBackColor = true;
+            this.btnPlay.Click += new System.EventHandler(this.playControlButton_Click);
+            // 
+            // btnRecord
+            // 
+            this.btnRecord.Image = global::Silence.Properties.Resources.Record2;
+            this.btnRecord.Location = new System.Drawing.Point(3, 3);
+            this.btnRecord.Name = "btnRecord";
+            this.btnRecord.Size = new System.Drawing.Size(75, 72);
+            this.btnRecord.TabIndex = 0;
+            this.btnRecord.UseVisualStyleBackColor = true;
+            this.btnRecord.Click += new System.EventHandler(this.recordControlButton_Click);
+            // 
+            // btnLoad
+            // 
+            this.btnLoad.Image = global::Silence.Properties.Resources.Open2;
+            this.btnLoad.Location = new System.Drawing.Point(388, 3);
+            this.btnLoad.Name = "btnLoad";
+            this.btnLoad.Size = new System.Drawing.Size(75, 72);
+            this.btnLoad.TabIndex = 3;
+            this.btnLoad.UseVisualStyleBackColor = true;
+            this.btnLoad.Click += new System.EventHandler(this.openControlButton_Click);
             // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(448, 64);
+            this.ClientSize = new System.Drawing.Size(697, 99);
+            this.Controls.Add(this.btnLoad);
             this.Controls.Add(this.panel1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -181,13 +189,9 @@
             this.Text = "Silence";
             this.Load += new System.EventHandler(this.FormMain_Load);
             this.panel1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.saveControlButton)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.openControlButton)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.clearControlButton)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.loopControlButton)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.playControlButton)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.stopControlButton)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.recordControlButton)).EndInit();
+            this.panel1.PerformLayout();
+            this.statusStrip1.ResumeLayout(false);
+            this.statusStrip1.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -195,14 +199,25 @@
         #endregion
 
         private System.Windows.Forms.Panel panel1;
-        private ControlButton saveControlButton;
-        private ControlButton openControlButton;
-        private ControlButton clearControlButton;
-        private ControlButton loopControlButton;
-        private ControlButton playControlButton;
-        private ControlButton stopControlButton;
-        private ControlButton recordControlButton;
-
+        private System.Windows.Forms.Button btnRecord;
+        private System.Windows.Forms.Button btnPlay;
+        private System.Windows.Forms.Button btnStop;
+        private System.Windows.Forms.Button btnPause;
+        private System.Windows.Forms.Button btnSave;
+        private System.Windows.Forms.Button btnLoad;
+        private System.Windows.Forms.Button btnLoop;
+        private System.Windows.Forms.Button btnSettings;
+        private System.Windows.Forms.StatusStrip statusStrip1;
+        private System.Windows.Forms.ToolStripStatusLabel lblEvents;
+        private System.Windows.Forms.ToolStripStatusLabel lblStatus;
+        private System.Windows.Forms.Button btnScreenshot;
+        //private ControlButton saveControlButton;
+        //private ControlButton openControlButton;
+        //private ControlButton clearControlButton;
+        //private ControlButton loopControlButton;
+        //private ControlButton playControlButton;
+        //private ControlButton stopControlButton;
+        //private ControlButton recordControlButton;
     }
 }
 

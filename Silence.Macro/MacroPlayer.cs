@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading;
 using System.Windows;
 using System.Windows.Forms;
+using Lua = NLua.Lua;
 
 namespace Silence.Macro
 {
@@ -15,6 +16,10 @@ namespace Silence.Macro
     /// </summary>
     public class MacroPlayer
     {
+        /// <summary>
+        /// Lua scripting class
+        /// </summary>
+        private Lua lua;
 
         /// <summary>
         /// Holds the mouse simulator that underlies this object.
@@ -70,6 +75,7 @@ namespace Silence.Macro
         /// </summary>
         public MacroPlayer()
         {
+            lua = new Lua();
             underlyingMouseSimulator = new MouseSimulator(new InputSimulator());
             underlyingKeyboardSimulator = new KeyboardSimulator(new InputSimulator());
             repetitions = 1;
@@ -82,6 +88,8 @@ namespace Silence.Macro
         public void CancelPlayback()
         {
             cancelled = IsPlaying;
+            macroThread.Abort();
+            IsPlaying = false;
         }
 
         /// <summary>
@@ -109,90 +117,17 @@ namespace Silence.Macro
         /// </summary>
         private void PlayMacro()
         {
+            if (CurrentMacro == null || CurrentMacro.MacroFile == null)
+                return;
+
             IsPlaying = true;
-
-            // Repeat macro as required.
-            for (int i = 0; i < Repetitions; i++)
+            int currentRepetition = repetitions;
+            while (currentRepetition > 0)
             {
-                // Loop through each macro event.
-                foreach (MacroEvent current in CurrentMacro.Events)
-                {
-                    // Cancel playback.
-                    if (cancelled)
-                    {
-                        cancelled = false;
-                        i = Repetitions;
-                        break;
-                    }
-
-                    // Cast event to appropriate type.
-                    if(current is MacroDelayEvent) 
-                    {
-                        // Delay event.
-                        MacroDelayEvent castEvent = (MacroDelayEvent)current;
-                        Thread.Sleep(new TimeSpan(castEvent.Delay));
-                    }
-                    else if (current is MacroMouseMoveEvent)
-                    {
-                        // Mouse move event.
-                        MacroMouseMoveEvent castEvent = (MacroMouseMoveEvent)current;
-                        Point absolutePoint = ConvertPointToAbsolute(castEvent.Location);
-                        underlyingMouseSimulator.MoveMouseTo(absolutePoint.X, absolutePoint.Y);
-                    }
-                    else if (current is MacroMouseDownEvent)
-                    {
-                        // Mouse down event.
-                        MacroMouseDownEvent castEvent = (MacroMouseDownEvent)current;
-                        Point absolutePoint = ConvertPointToAbsolute(castEvent.Location);
-                        underlyingMouseSimulator.MoveMouseTo(absolutePoint.X, absolutePoint.Y);
-                        if (castEvent.Button == System.Windows.Input.MouseButton.Left)
-                        {
-                            underlyingMouseSimulator.LeftButtonDown();
-                        }
-                        else if (castEvent.Button == System.Windows.Input.MouseButton.Right)
-                        {
-                            underlyingMouseSimulator.RightButtonDown();
-                        }
-                    }
-                    else if (current is MacroMouseUpEvent)
-                    {
-                        // Mouse up event.
-                        MacroMouseUpEvent castEvent = (MacroMouseUpEvent)current;
-                        Point absolutePoint = ConvertPointToAbsolute(castEvent.Location);
-                        underlyingMouseSimulator.MoveMouseTo(absolutePoint.X, absolutePoint.Y);
-                        if (castEvent.Button == System.Windows.Input.MouseButton.Left)
-                        {
-                            underlyingMouseSimulator.LeftButtonUp();
-                        }
-                        else if (castEvent.Button == System.Windows.Input.MouseButton.Right)
-                        {
-                            underlyingMouseSimulator.RightButtonUp();
-                        }
-                    }
-                    else if (current is MacroKeyDownEvent)
-                    {
-                        // Key down event.
-                        MacroKeyDownEvent castEvent = (MacroKeyDownEvent)current;
-                        underlyingKeyboardSimulator.KeyDown((Simulation.Native.VirtualKeyCode)castEvent.VirtualKeyCode);
-                    }
-                    else if (current is MacroKeyUpEvent)
-                    {
-                        // Key up event.
-                        MacroKeyUpEvent castEvent = (MacroKeyUpEvent)current;
-                        underlyingKeyboardSimulator.KeyUp((Simulation.Native.VirtualKeyCode)castEvent.VirtualKeyCode);
-                    }
-                    else if (current is MacroMouseWheelEvent)
-                    {
-                        // Mouse wheel event.
-                        MacroMouseWheelEvent castEvent = (MacroMouseWheelEvent)current;
-                        Point absolutePoint = ConvertPointToAbsolute(castEvent.Location);
-                        underlyingMouseSimulator.MoveMouseTo(absolutePoint.X, absolutePoint.Y);
-                        underlyingMouseSimulator.VerticalScroll(castEvent.Delta / 120);
-                    }
-
-                }
+                lua.DoFile(CurrentMacro.MacroFile);
+                currentRepetition--;
             }
-
+                
             IsPlaying = false;
         }
 

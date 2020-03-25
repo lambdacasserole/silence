@@ -3,6 +3,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Windows;
+using System.Windows.Forms;
 
 namespace Silence.Macro
 {
@@ -17,6 +19,16 @@ namespace Silence.Macro
         /// Holds the underlying mouse/keyboard hook.
         /// </summary>
         private HookManager underlyingHook;
+
+        /// <summary>
+        /// Update status timer
+        /// </summary>
+        private Timer updateStatus;
+
+        /// <summary>
+        /// Status label
+        /// </summary>
+        private ToolStripStatusLabel statusLabel;
 
         /// <summary>
         /// Holds the time in ticks that the last event occurred.
@@ -34,10 +46,30 @@ namespace Silence.Macro
         public bool IsRunning { get; private set; }
 
         /// <summary>
+        /// Shortcuts delegate
+        /// </summary>
+        public delegate bool Shortcuts(Hooking.GlobalKeyEventHandlerArgs e);
+
+        /// <summary>
+        /// Shortcut handler
+        /// </summary>
+        public Shortcuts ShortcutHandler;
+
+        /// <summary>
+        /// Mouse coordinates
+        /// </summary>
+        public Point CurrentXY;
+
+        /// <summary>
         /// Initialises a new instance of a macro recorder.
         /// </summary>
-        public MacroRecorder()
+        public MacroRecorder(ToolStripStatusLabel status)
         {
+            statusLabel = status;
+            updateStatus = new Timer();
+            updateStatus.Interval = 1000;
+            updateStatus.Tick += UpdateStatus_Tick;
+
             underlyingHook = new HookManager();
 
             underlyingHook.KeyDown += underlyingHook_KeyDown;
@@ -46,6 +78,11 @@ namespace Silence.Macro
             underlyingHook.MouseUp += underlyingHook_MouseUp;
             underlyingHook.MouseMove += underlyingHook_MouseMove;
             underlyingHook.MouseWheel += underlyingHook_MouseWheel;
+        }
+
+        private void UpdateStatus_Tick(object sender, EventArgs e)
+        {
+            statusLabel.Text = "Events: " + CurrentMacro.Events.Count();
         }
 
         /// <summary>
@@ -92,6 +129,7 @@ namespace Silence.Macro
             {
                 Clear();
             }
+            updateStatus.Start();
             lastEventTime = DateTime.Now.Ticks;
             IsRunning = true;
         }
@@ -101,12 +139,13 @@ namespace Silence.Macro
         /// </summary>
         public void StopRecording()
         {
+            updateStatus.Stop();
             IsRunning = false;
+            CurrentMacro.SaveTemp();
         }
 
         private void underlyingHook_KeyDown(object sender, Silence.Hooking.GlobalKeyEventHandlerArgs e)
         {
-            
             if (IsRunning)
             {
                 AddDelayEvent();
@@ -116,10 +155,14 @@ namespace Silence.Macro
 
         private void underlyingHook_KeyUp(object sender, Silence.Hooking.GlobalKeyEventHandlerArgs e)
         {
-            if (IsRunning)
+            bool? result = ShortcutHandler?.Invoke(e);
+            if (result == null || result == true)
             {
-                AddDelayEvent();
-                CurrentMacro.AddEvent(new MacroKeyUpEvent(e.VirtualKeyCode));
+                if (IsRunning)
+                {
+                    AddDelayEvent();
+                    CurrentMacro.AddEvent(new MacroKeyUpEvent(e.VirtualKeyCode));
+                }
             }
         }
 
@@ -143,6 +186,7 @@ namespace Silence.Macro
 
         private void underlyingHook_MouseMove(object sender, Silence.Hooking.GlobalMouseEventHandlerArgs e)
         {
+            CurrentXY = e.Point;
             if (IsRunning)
             {
                 AddDelayEvent();
